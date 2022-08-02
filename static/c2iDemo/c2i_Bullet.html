@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>C2i:dumbo-Bullet for C2I</title>
+    <script src="assets/lib/d3.min.js" charset="utf-8"></script>
+    <script src="assets/lib/three.min.js"></script>
+
+    <script src="assets/js/c2i.v2.min.js"></script>
+
+    <script src="assets/i18n/c2i_kr.js"></script>
+    <!-- 다국어 사용시 아래 스크립트 필요합니다. (사용하지 않으면 제거) -->
+    <!--<script src="../assets/i18n/c2i_en.js"></script>-->
+    <!--<script src="../assets/i18n/c2i_jp.js"></script>-->
+    <!--<script src="../assets/i18n/c2i_ch.js"></script>-->
+
+    <!-- 정품 인증번호 발급 및 적용시 아래 스크립트 필요합니다. -->
+    <!--<script src="../assets/c2iLicenseKey.js"></script>-->
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/c2i.v2.min.css">
+    <link rel="stylesheet" href="assets/css/demo.css">
+    <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+    <style>
+        body {
+            background-color: #474747;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-1">
+            <a href="index.html#c2iDemo" style="color: white"><div class="btn btn-primary btn-sm btn-group-justified">홈</div></a>
+        </div>
+        <div class="col-md-1">
+            <div id="c2iGuide" class="btn btn-primary btn-sm btn-group-justified">도움말</div>
+        </div>
+
+        <div class="col-sm-8 col-md-8 col-lg-8">
+            <div id="initData" class="btn btn-success btn-sm">데이터 초기화</div>
+            <div id="modifyData" class="btn btn-success btn-sm">데이터 자동 갱신</div>
+            <div id="orient" class="btn btn-success btn-sm">방향전환</div>
+            <div id="colorSolid" class="btn btn-success btn-sm">색상입체 갱신</div>
+            <div id="save" class="btn btn-warning btn-sm">익스포트</div>
+        </div>
+    </div>
+
+    <div id="c2iGuideInfo" class=" c2iHidden c2iGuideInfo">
+        <div class="container">
+            <button id="c2iGuideClose" class="btn btn-primary btn-sm float my-float">닫기</button>
+            <div class="page-header">
+                <h1 class="text-primary">씨투아이 Bullet 컴포넌트</h1>
+                <h3>세 가지 관점의 데이터를 표현하는 컴포넌트.</h3>
+                <p>1.좋음, 만족, 나쁨 등의 구간 표시 용도.(n개 구간 가능)</p>
+                <p>2.계획, 수정계획 등의 구간 표시 용도.(n개 구간 가능)</p>
+                <p>3.실적 등의 표시 용도.(n개 구간 가능)</p>
+            </div>
+
+            <!-- 데모 따라하기-->
+            <h3>데모 따라하기</h3>
+            <div class="row">
+                <div class="col-md-3">0.상위 메뉴 버튼을 클릭해 보세요.</div>
+                <div class="col-md-8">예: 데모 데이터를 주기적으로 초기화 요청.</div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">1.브라우져 크기를 조정해 보세요.</div>
+            </div>
+
+            <!-- 데이터 구조-->
+            <h3>데이터 구조: csv, tsv, dsv 등</h3>
+            <div class="row">
+                <div class="col-md-2">0.csv</div>
+                <div class="col-md-9">
+                    <pre><code>
+title,subtitle,bad,soso,good,plan,current,format
+매출액,(억원),150,225,300,270,250,",f"
+수익률,%,20,25,30,23,26,",f"
+평균주문단가,(만원),350,500,600,320,550,",f"
+신규고객,객수,1400,2000,2500,1000,2100,",f"
+만족도,(5점 만점),3.5,4.25,5,4.7,4.4,",.1f"
+                    </code></pre>
+                </div>
+            </div>
+
+            <!-- 개발자 코딩 제공 부분 -->
+            <h3>개발자 코딩 제공 부분</h3>
+            <p>홈, 도움말는 <strong>개발자가 씨투아이 API등을 활용하여 임의로 코딩</strong>하여 제공한 UI 입니다.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 col-md-6 col-lg-6">
+            <div id="c2iChart01" class="c2iNoSelect"></div>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6">
+            <div id="c2iChart02" class="c2iNoSelect"></div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <p style="color: orange; text-align: center;">아래는 비 반응형 영역입니다.</p>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6">
+            <div id="c2iChart11" class="c2iNoSelect"></div>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6">
+            <div id="c2iChart12" class="c2iNoSelect"></div>
+        </div>
+    </div>
+</div>
+<script>
+    /*
+     대.소문자는 반드시 준수해야 합니다.
+     옵션이 없거나(미정의) '' 이면, 필수요소는 기본값 자동 적용되며 불필요한 옵션은 자동으로 적용되지 않습니다.
+     *** 공통 정보
+         -. isResponsive: true, false (기본값: false)
+         -. width (단위: %, px) : % -> 상위 컨테이너 대비, px -> 절대 사이즈인 경우.(미 설정시 상위의 100% 설정)
+         -. aspectRatio : 4:3 (= 1.333), 16:9 (= 1.777) 기본값, 또는 width 대비 % 설정 가능
+         -. height (단위: px) : aspectRatio 없이 height 설정하면 적용 가능.(특히, 수직형 Bullet인 경우 비 반응형을 적용이 용이합니다.)
+         -. theme : #efefef, #444363, #333333 (제거: none), linear-gradient(to right, #02111d, #037bb5, #02111d)
+         -. lang : 언어 설정(기본값:'kr')
+         -. margin : x,y축이 설정 및 점유하는 영역.(기본값 margin : {top: 30, left: 30, right: 30, bottom: 30, isDynamic: true})
+                     top ~ bottom: 기본값 -> 30, 차트의 내역(실제 막대, 라인 등)이 그려질 영역 설정용도
+         -. easing : 애니메이션시 적용될 기본 알고리즘 (linear, elastic, exp, bounce, quad, cubic, sin, circle, back)
+         -. duration: 50~1500 ms(기본값 250), delay: 10~500 ms(기본값 20)
+
+         -. data : 씨투아이에 주입될 데이터 객체로서 직접 주입해도 되며, 다른 옵션 처럼 추후 주입해도 됩니다.
+
+         -. title : 컨포넌트의 제목을 표시하기 위한 장소이며, 특히 데이터 정렬을 적용하는 차트(표준, 피라미드, 파이 등)에서는
+                     정렬 상태를 부 제목을 통해 제공합니다.
+                     .caption: 제목 명칭
+                     .fonts:제목 폰트 (기본값:['helvetica','20px','#434343'])
+                     .textDeco: underline/line-through/overline
+                     .gap: x, y 의 여유 공간 조정용도
+                     .xPos:start, middle, end, yPos: top,middle, bottom,
+                     .subCaption: 주 제목 명칭, subFonts, opacity:1,
+                     .desc: 제목 툴팁
+
+         -. isDev : 개발 모드 여부.
+                .true: 옵션 창에 개발자용 메뉴 표시되며, 실행시 로그 정보 표시
+
+     *** bullet
+         -. orient : left & right 는 수평형, top & bottom 은 수직형
+         -. size : 수직형의 높이, 수평형의 넓이
+         -. solid : 색상에 입체감 적용.
+         -. markerType 'line'(기본값), 'circle'에 따라 markers size는 길이 또는 반지름에 적용
+
+     *** tick
+         -. fonts: 축의 tick 값 표시하기 위한 폰트 (기본값 : ['helvetica','10px','#bbb'])
+         -. stroke, strokeWidth : 축의 tick 선 색상 및 두께.
+         -. formatColNm : 데이터값의 포멧 표시 컬럼명칭. 없으면 실수를 표현하기 위해 ",.1f" 적용
+
+     *** caption : 제목 및 부제목 설정 용도
+         -. titleColNm : 주 제목 컬럼포함 컬럼 명칭
+         -. fonts: 주 제목 표시하기 위한 폰트
+         -. subtitleColNm : 부 제목 컬럼포함 컬럼 명칭
+         -. subFonts: 부 제목 표시하기 위한 폰트
+         -. dx, dy: 간격 조정 용도
+
+     *** baseCircle : 온도계 모양 흉내
+         -. radius: 범위 크기에 따라 적절히 조정해야 합니다.
+         -. color : 가능하면 범위(ranges)값의 마지막 색상과 동일하면 좋음.
+         -. cx :  수평, 수직형에 따라 조정해야 합니다.
+         -. draw : 초기에 그릴 것이지 여부.
+
+     *** ranges : 좋음, 만족, 나쁨 등의 구간 표시 용도.(n개 가능)
+         -. caption : 범위 제목명
+         -. colNm : 범위 컬럼명
+         -. color : 가장 넓은 막대 색상.(['#6baa01','#92dc01'], solid false인 경우 첫번째 인자색상 적용)
+
+     *** Measures : 계획 등의 구간 표시 용도(n개 가능)
+         -. caption : 항목(measure) 제목명
+         -. colNm : 항목 컬럼명
+         -. color : 가운데 막대 색상.(['#6baa01','#92dc01'], solid false인 경우 첫번째 인자색상 적용)
+
+     *** markers : 실적 등의 표시 용도(n개 가능)
+         -. caption : 마커 제목명
+         -. colNm : 마커 컬럼명
+         -. color : 마커 색상.(['#6baa01','#92dc01'], solid false인 경우 첫번째 인자색상 적용)
+         -. size : 항목간 연결 선 두께(라인) 또는 반지름 크기(원).
+         -. fonts: 마커 표시하기 위한 폰트
+         -. pos: 마커대비 상하 위치 간격
+
+     *** Tooltip
+         -. id : 툴팁 Container Id('#'을 붙이세요)
+         -. infoLevel : 툴팁 상세 정보 수준(0 ~ 3 레벨이며, 기본: 0)
+         -. fixedPos : 툴팁을 마우스 포지션에 관계없이 고정위치에 표현하고자 할 경우 사용(기본: xPos:'start', yPos:'top')
+                        미 정의시 클릭한 위치에 표시됩니다.
+         -. displayTips : 자동 툴팁에서 표시될 팁 데이터 건수(라인과 같이 많은 데이터 존재시, 기본값 2: 한 행에 2개씩 표시)
+         -. isUserTip : 사용자 제공 툴팁 여부, 사용자 제공 툴팁이면
+                        아래 함수에서 상기의 id에 데이터를 바인딩 처리를 하면 됩니다.
+
+     *** method
+         -. click, mouseenter, mouseleave
+             이름과 같은 이벤트 이며, 동 함수들은 여러 곳에서 발생합니다.
+             또한 개발자는 전달되는 파라메터인 발생 소스(fromSource)와 데이터를 확인하여 추가적인 알고리즘을 처리합니다.
+     */
+    var c2iOption = { // bullet 의 높이값은 bullet 수에 따라 자동 계산됩니다.
+        isResponsive: true, width: '100%', theme: 'linear-gradient(to bottom, #02111d, #037bb5, #02111d)', // #484848, lang: 'kr',
+        margin:{top:50, left:100, right:40, bottom:0},
+        easing:'linear', duration:750, delay:20,
+
+        data: undefined,
+
+        title: {
+            caption:"전기대비 종합 분석",fonts:['맑은 고딕','18px','#666'],textDeco:"underline", gap: 5, xPos:'middle', yPos:'top',
+            subCaption:"('2017년 통계 기준)", subFonts: ['맑은 고딕','12px','#a5a5a5'], opacity:1,
+            desc:"데모용으로 작성된 차트"
+        },
+
+        bullet: { size: 40, orient:'left', solid: true, markerType: 'circle'}, // markerType: 'line'(기본값), 'circle'
+
+        tick: {fonts: ['맑은 고딕','10px','#bbb'], stroke: '#aaa', strokeWidth: '1px', formatColNm: 'format' },
+
+        caption:{titleColNm: 'title', subtitleColNm:'subtitle', fonts:['맑은 고딕','12px','#ffff3e'], subFonts:['맑은 고딕','10px','#ffc419'],
+            dx: 0, dy:13},
+
+        baseCircle: { // color는 가능하면 범위값의 마지막 색상과 동일하면 좋음.
+            radius: 35, color: ['#e44a00','#ededed', '#e44a00'], cx: -25, draw: true
+        },
+        ranges: [ // 주의: 큰 값 순서로 등록
+            {caption: '좋 음', colNm: 'good',  color: ['#6baa01','#92dc01']},
+            {caption: '만 족', colNm: 'soso', color: ['#f8bd19','#ededed']},
+            {caption: '나 쁨', colNm: 'bad', color: ['#e44a00','#ededed']}
+        ],
+        measures:[
+            {caption: '1차계획', colNm: 'plan1', color: ['#555','#fff']},
+            {caption: '2차계획', colNm: 'plan2', color: ['#999','#333']}
+        ],
+        markers: [
+            {caption: '당기', colNm: 'current', color: ['#e44a00','#ededed', '#e44a00'], size: 5, fonts:['맑은 고딕','11px','#fff'], pos: 'bottom' }, // green
+            {caption: '전기', colNm: 'previous', color: ['#555','#fff','#555'], size: 5, fonts:['맑은 고딕','11px','#fff'], pos: 'top' }
+        ],
+
+        // fixedPos: undefined
+        tooltip: {id: '#tooltip', infoLevel:1, fixedPos: {xPos:'end', yPos:'top'} , displayTips: 3, opacity: 0.9, isUserTip: false, isShow: true },
+        method: {click:getClickInfo, mouseenter:getMouseEnterInfo, mouseleave:getMouseLeaveInfo},
+        isDev:false
+    };
+
+    var c2iChart = c2i.dumbo.bullet('#c2iChart01', c2iOption);
+    var c2iOption2 = c2i.util.deepClone(c2iOption);
+    c2iOption2.easing = 'elastic';
+    c2iOption2.duration = 1200;
+    c2iOption2.title.caption = "전기대비 영업 분석";
+    c2iOption2.bullet.orient = 'right';
+    c2iOption2.baseCircle = undefined;
+    c2iOption2.ranges = [
+        {caption: 'Good', colNm: 'good',  color: ['rgb(90, 202, 238)', 'rgb(90, 202, 238)'] },
+        {caption: 'SoSo', colNm: 'soso', color: ['rgb(120, 186, 240)', 'rgb(120, 186, 240)'] },
+        {caption: 'Bad', colNm: 'bad', color: ['rgb(140, 145, 203)', 'rgb(140, 145, 203)'] }
+    ];
+    c2iOption2.measures.shift();
+    c2iOption2.measures[0] = {caption: '매출목표', colNm: 'plan', color: ['#555','#eee']  };
+    c2iOption2.markers.splice(1,1);
+
+    c2iOption2.markers[0] = {caption: '실적', colNm: 'current', color: ['#333333','#ededed', '#333333'], size: 7, fonts:['맑은 고딕','14px','#f4ee09'], pos: 'top' };
+    var c2iChart2 = c2i.dumbo.bullet('#c2iChart02', c2iOption2);
+    ///////////////////
+    function getClickInfo(fromSource, data){
+        console.log(fromSource.container + ',' + fromSource.selector + ',' + fromSource.key + ' click ');
+        for(var attr in data){
+            console.log(attr + ' : ' + data[attr]);
+        }
+        console.log('keys ', { alter: d3.event.altKey, control: d3.event.ctrlKey, shift: d3.event.shiftKey, meta: d3.event.metaKey })
+    }
+    function getMouseEnterInfo(fromSource, data){
+        console.log(fromSource.container + ',' + fromSource.selector + ' getMouseEnterInfo');
+    }
+    function getMouseLeaveInfo(fromSource, data){
+        console.log(fromSource.container + ',' + fromSource.selector + ' getMouseLeaveInfo')
+    }
+
+    function initProcess() {
+        if (autoRun) {
+            autoRun = clearTimeout(autoRun);
+            d3.select('#modifyData').text('데이터 자동 갱신');
+        }
+        d3.csv('assets/data/dumbo/bullets.csv', function(error, root) {
+            c2iChart.data(root).render();
+        });
+        d3.csv('assets/data/dumbo/bullets2.csv', function(error, root) {
+            c2iChart2.data(root).render();
+        });
+        d3.csv('assets/data/dumbo/bullets.csv', function(error, root) {
+            c2iChart10.data(root).render();
+        });
+        d3.csv('assets/data/dumbo/bullets2.csv', function(error, root) {
+            c2iChart20.data(root).render();
+        });
+    }
+    initProcess();
+
+    var autoRun;
+    d3.select('#initData').on('click', initProcess);
+    d3.select('#modifyData').on('click', animatedAction);
+    d3.select('#orient').on('click', orientToggle);
+    d3.select('#colorSolid').on('click', colorSolidToggle);
+    function orientToggle() {
+        c2iOption.bullet.orient = c2iOption.bullet.orient === 'left' ? 'right' : 'left';
+        c2iOption2.bullet.orient = c2iOption2.bullet.orient === 'left' ? 'right' : 'left';
+        c2iChart.bullet(c2iOption.bullet).render();
+        c2iChart2.bullet(c2iOption2.bullet).render();
+
+        c2iOption10.bullet.orient = c2iOption10.bullet.orient === 'top' ? 'bottom' : 'top';
+        c2iOption12.bullet.orient = c2iOption12.bullet.orient === 'top' ? 'bottom' : 'top';
+        c2iChart10.bullet(c2iOption10.bullet).render();
+        c2iChart20.bullet(c2iOption12.bullet).render();
+    }
+    function colorSolidToggle() {
+        c2iOption.bullet.solid = !c2iOption.bullet.solid;
+        c2iOption2.bullet.solid = !c2iOption2.bullet.solid;
+        c2iChart.bullet(c2iOption.bullet).render();
+        c2iChart2.bullet(c2iOption2.bullet).render();
+
+        c2iOption10.bullet.solid = !c2iOption10.bullet.solid;
+        c2iOption12.bullet.solid = !c2iOption12.bullet.solid;
+        c2iChart10.bullet(c2iOption10.bullet).render();
+        c2iChart20.bullet(c2iOption12.bullet).render();
+    }
+    function animatedAction(){
+        if (autoRun) {
+            d3.select(this).text('데이터 자동 갱신');
+            autoRun = clearTimeout(autoRun);
+        }
+        else {
+            d3.select(this).text('데이터 변경 중지');
+            autoRun = setInterval(tick, 1500);
+        }
+
+        function tick() {
+            var data = c2iChart.data().map(randomData);
+            // data 초기 작업을 하지않게 설정
+            c2iChart.data(data, true).render();
+
+            var data2 = c2iChart2.data().map(randomData);
+            // data 초기 작업을 하지않게 설정
+            c2iChart2.data(data2, true).render();
+
+            var data10 = c2iChart10.data().map(randomData);
+            // data 초기 작업을 하지않게 설정
+            c2iChart10.data(data10, true).render();
+
+            var data20 = c2iChart20.data().map(randomData);
+            // data 초기 작업을 하지않게 설정
+            c2iChart20.data(data20, true).render();
+        }
+    }
+
+    function randomData(d) {
+        if (!d.randomizer) d.randomizer = randomizer(d);
+        d.ranges = d.ranges.map(d.randomizer);
+        d.markers = d.markers.map(d.randomizer);
+        d.measures = d.measures.map(d.randomizer);
+        return d;
+    }
+
+    function randomizer(d) {
+        var k = d3.max(d.ranges) * .2;
+        return function(d) {
+            return Math.max(0, d + k * (Math.random() - .5));
+        };
+    }
+
+</script>
+<script>
+    var c2iOption10 = { // bullet 의 높이값은 bullet 수에 따라 자동 계산됩니다.
+        isResponsive: false, width: 555, height: 400 ,theme: 'linear-gradient(to bottom, #02111d, #037bb5, #02111d)', // #484848, lang: 'kr',
+        margin:{top:60, left:40, right:30, bottom:70},
+        easing:'linear', duration:750, delay:20,
+
+        data: undefined,
+
+        title: {
+            caption:"전기대비 종합 분석",fonts:['맑은 고딕','18px','#666'],textDeco:"underline", gap: 5, xPos:'middle', yPos:'top',
+            subCaption:"('2017년 통계 기준)", subFonts: ['맑은 고딕','12px','#a5a5a5'], opacity:1,
+            desc:"데모용으로 작성된 차트"
+        },
+
+        bullet: { size: 55, orient:'bottom', solid: true, markerType: 'line'}, // markerType: 'line'(기본값), 'circle'
+
+        tick: {fonts: ['맑은 고딕','10px','#bbb'], stroke: '#aaa', strokeWidth: '2px', ticks: 8, formatColNm: 'format' },
+
+        caption:{titleColNm: 'title', subtitleColNm:'subtitle', fonts:['맑은 고딕','12px','#ffff3e'], subFonts:['맑은 고딕','10px','#2fc3c3'],
+            dx: 0, dy:13},
+
+        baseCircle: { // color는 가능하면 범위값의 마지막 색상과 동일하면 좋음.
+            radius: 35, color: ['#e44a00','#ededed','#e44a00'], cx: 20, draw: true
+        },
+        ranges: [ // 주의: 큰 값 순서로 등록
+            {caption: '좋 음', colNm: 'good',  color: ['#6baa01','#92dc01']},
+            {caption: '만 족', colNm: 'soso', color: ['#f8bd19','#ededed']},
+            {caption: '나 쁨', colNm: 'bad', color: ['#e44a00','#ededed']}
+        ],
+        measures:[
+            {caption: '1차계획', colNm: 'plan1', color: ['#555','#fff'] },
+            {caption: '2차계획', colNm: 'plan2', color: ['dimgray','#333']}
+        ],
+        markers: [  // markerType 'line'(기본값), 'circle'에 따라 size는 길이 또는 반지름
+            {caption: '당기', colNm: 'current', color: ['#e44a00','#ededed', '#e44a00'], size: 5, fonts:['맑은 고딕','12px','#ff5454'], pos: 'top' }, // green
+            {caption: '전기', colNm: 'previous', color: ['#555','#fff','#555'], size: 5, fonts:['맑은 고딕','12px','#484848'], pos: 'bottom' }
+        ],
+
+        // fixedPos: undefined
+        tooltip: {id: '#tooltip', infoLevel:1, fixedPos: {xPos:'end', yPos:'top'} , displayTips: 3, opacity: 0.9, isUserTip: false, isShow: true },
+        method: {click:getClickInfo, mouseenter:getMouseEnterInfo, mouseleave:getMouseLeaveInfo},
+        isDev:false
+    };
+
+    var c2iChart10 = c2i.dumbo.bullet('#c2iChart11', c2iOption10);
+    var c2iOption12 = c2i.util.deepClone(c2iOption10);
+    c2iOption12.margin.top = 60;
+    c2iOption12.margin.bottom = 50;
+    c2iOption12.easing = 'elastic';
+    c2iOption12.duration = 1200;
+    c2iOption12.title.caption = "전기대비 영업 분석";
+    c2iOption12.bullet.orient = 'top';
+    c2iOption12.baseCircle = undefined;
+    c2iOption12.ranges = [
+        {caption: 'Good', colNm: 'good',  color: ['rgb(90, 202, 238)', 'rgb(90, 202, 238)'] },
+        {caption: 'SoSo', colNm: 'soso', color: ['rgb(120, 186, 240)', 'rgb(120, 186, 240)'] },
+        {caption: 'Bad', colNm: 'bad', color: ['rgb(140, 145, 203)', 'rgb(140, 145, 203)'] }
+    ];
+    c2iOption12.measures.shift();
+    c2iOption12.measures[0] = {caption: '매출목표', colNm: 'plan', color: ['#555','#eee']  };
+    c2iOption12.markers.splice(1,1);
+
+    c2iOption2.markers[0] = {caption: '실적', colNm: 'current', color: ['#333333','#ededed', '#333333'], size: 8, fonts:['맑은 고딕','12px','#ffffff'], pos: 'top' };
+    var c2iChart20 = c2i.dumbo.bullet('#c2iChart12', c2iOption12);
+</script>
+<script>
+    d3.select('#currentLang').attr('class','button').attr('value', 'kr')
+        .attr('title','언어 선택').on('change', change_lang);
+
+    function change_lang(){
+        c2iChart.lang(this.value);
+    }
+
+    d3.select('#save').on('click', exportImage).on('touchstart', exportImage);
+    function exportImage(){
+        c2i.util.exportImage(['#c2iChart01', '#c2iChart02','#c2iChart11', '#c2iChart12']);
+    }
+
+    d3.select('#c2iGuide').on('click', c2iGuide);
+    d3.select('#c2iGuideClose').on('click', c2iGuideClose);
+
+    function c2iGuide() {
+        d3.select('#c2iGuideInfo').classed('c2iHidden', !d3.select('#c2iGuideInfo').classed('c2iHidden'));
+    }
+    function c2iGuideClose() {
+        d3.select('#c2iGuideInfo').classed('c2iHidden', true);
+    }
+</script>
+</body>
+</html>

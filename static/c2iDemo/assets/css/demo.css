@@ -1,0 +1,39 @@
+.demoClass {
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: relative;
+    text-align: center;
+}
+
+.demoClass::after {
+    content: "";
+    background: url(../img/c2i/logo_co.png) top center no-repeat;
+    opacity: 0.1;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+}
+
+.c2iGuideInfo {
+    background-color: #4a4a4a;
+    color: #fffdfd;
+}
+.c2iGuideInfo .text-primary{
+    color: #FFEB3B;
+}
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: #3e3e3e;
+}
+.c2iGuideInfo .float{
+    position:fixed;
+    width:60px;
+    height:60px;
+    top:40px;
+    right:40px;
+    border-radius:50px;
+    text-align:center;
+}

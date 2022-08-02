@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>C2i:dumbo-워터폴(Waterfall, Cascade)</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+    <script src="assets/lib/d3.min.js" charset="utf-8"></script>
+    <script src="assets/lib/three.min.js"></script>
+
+    <script src="assets/js/c2i.v2.min.js"></script>
+
+    <script src="assets/i18n/c2i_kr.js"></script>
+    <!-- 다국어 사용시 아래 스크립트 필요합니다. (사용하지 않으면 제거) -->
+    <script src="assets/i18n/c2i_en.js"></script>
+    <script src="assets/i18n/c2i_jp.js"></script>
+    <script src="assets/i18n/c2i_ch.js"></script>
+
+    <!-- 정품 인증번호 발급 및 적용시 아래 스크립트 필요합니다. -->
+    <!--<script src="../assets/c2iLicenseKey.js"></script>-->
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/c2i.v2.min.css">
+    <link rel="stylesheet" href="assets/css/demo.css">
+    <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+
+	<style>
+        body{
+            background-color: #474747;
+        }
+        .c2iLegendFloat{
+            position: absolute;
+            left: 20px;
+            top: 50px;
+            z-index: 100;
+        }
+	</style>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-8 col-md-8 col-lg-8">
+            <div id="c2iLegend01Float" class="c2iLegend c2iNoSelect c2iLegendFloat"></div>
+            <div id="c2iLegend01" class="c2iLegend" style="display:inline-block"></div>
+            <div style="display:inline">
+                <label for="currentLang" style="color: #eee">언어
+                    <select id='currentLang' style="color: #333">
+                        <option value="kr">한 글</option>
+                        <option value="en">English</option>
+                        <option value="jp">日本語</option>
+                        <option value="ch">中国語</option>
+                        <option value="mn">Монгол хэл</option>
+                    </select>
+                </label>
+            </div>
+        </div>
+        <div class="col-md-1">
+            <a href="index.html#c2iDemo" style="color: white"><div class="btn btn-primary btn-sm btn-group-justified">홈</div></a>
+        </div>
+        <div class="col-md-1">
+            <div id="c2iGuide" class="btn btn-primary btn-sm btn-group-justified">도움말</div>
+        </div>
+        <div class="col-sm-2 col-md-2 col-lg-2">
+            <div id="save" class="btn btn-warning btn-sm btn-group-justified">익스포트</div>
+        </div>
+    </div>
+    <div id="c2iGuideInfo" class="row c2iHidden c2iGuideInfo">
+        <div class="container">
+            <button id="c2iGuideClose" class="btn btn-primary btn-sm float my-float">닫기</button>
+            <div class="page-header">
+                <h1 class="text-primary">씨투아이 waterfall 차트 컴포넌트</h1>
+                <p>다음과 같은 정보 표출에 적합하며, 씨투아이에서는 dumbo(멍텅구리) 컴포넌트라고 합니다.</p>
+                <p>-.aka: cascade chart, flying bricks chart or Mario chart</p>
+                <p>-.용도: quantitative, inventory, performance analysis & human resource management etc,.</p>
+            </div>
+
+            <!-- 데모 따라하기-->
+            <h3>데모 따라하기</h3>
+            <div class="row">
+                <div class="col-md-12">툴팁 정보를 주의해 보세요.(맨 끝의 막대는 Running-Total: 이동 합계)</div>
+                <div class="col-md-12">브라우저 크기 조절해 보세요.</div>
+            </div>
+
+            <!-- 데이터 구조-->
+            <h3>데이터 구조: csv, tsv , dsv 등의 화일타입 구분은 의미 없음</h3>
+            <div class="row">
+                <div class="col-md-1">0.csv</div>
+                <div class="col-md-11">
+                        <pre><code>
+name,current,previous,previous2
+제품 매출,4200,4000,3900
+서비스 매출,2100,2500,2200
+수출,1100,1200,1100
+고정비,-1700,-7500,-2500
+변동비,-1400,-1600,-2000
+                        </code></pre>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-1">1.json</div>
+                <div class="col-md-11">
+                        <pre><code>
+유사합니다.
+                        </code></pre>
+                </div>
+            </div>
+
+            <!-- 개발자 코딩 제공 부분 -->
+            <h3>개발자 코딩 제공 부분</h3>
+            <p>홈, 도움말.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <div id="c2iChart01" class="c2iNoSelect" data-c2iLegendId="c2iLegend01"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 col-md-6 col-lg-6">
+            <div id="c2iLegend10" class="c2iLegend" style="margin-top: 5px;"></div>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6">
+            <div id="c2iLegend11" class="c2iLegend" style="margin-top: 5px;"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 col-md-6 col-lg-6">
+            <div id="c2iChart10" class="c2iNoSelect" data-c2iLegendId="c2iLegend10"></div>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6">
+            <div id="c2iChart11" class="c2iNoSelect" data-c2iLegendId="c2iLegend11"></div>
+        </div>
+    </div>
+</div>
+
+<!-- 자동 툴팁 사용시 name, measure는 필수 존재 내역입니다.
+     Custom Tooltip은 별도 ID로 만들어 사용자가 임의로 프로그램 가능합니다. -->
+<div id="tooltip" class="c2iTooltip c2iHidden">
+    <table style="width:300px">
+        <thead>
+        <tr>
+            <th colspan='4' class="tipHeader">
+                <div class="c2iCloseBtn" title="닫기">X</div>
+                <p><strong><span id="name">판매본부</span></strong></p>
+                <p id="measure" style="font-size: 14px; color:yellow">1,200</p>
+                <hr style="margin:2px 0px; opacity: 0.5;"> <!-- ratio가 있거나 hr 태그가 존재해야 합니다 -->
+                <p id="ratio"></p>
+                <!--<p><span id="testId" style="font-size: 12px; color: orange;">사용자 임의 툴팁 적용시,<br> 제공 데이터로 재구성 가능.</span></p>-->
+            </th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<script>
+    /*
+ 대.소문자는 반드시 준수해야 합니다.
+ 옵션이 없거나(미정의) '' 이면, 필수요소는 기본값 자동 적용되며 불필요한 옵션은 자동으로 적용되지 않습니다.
+ *** 공통 정보
+     -. isResponsive: true, false (기본값: false)
+     -. width (단위: %, px) : % -> 상위 컨테이너 대비, px -> 절대 사이즈인 경우.(미 설정시 상위의 100% 설정)
+     -. aspectRatio : 4:3 (= 1.333), 16:9 (= 1.777) 기본값, 또는 width 대비 % 설정 가능
+     -. height (단위: px) : aspectRatio 없이 height 설정하면 적용 가능.(비 반응형시 추천)
+     -. theme : #efefef, #444363, #333333 (제거: none), linear-gradient(to right, #02111d, #037bb5, #02111d)
+     -. lang : 언어 설정(기본값:'kr')
+     -. margin : x,y축이 설정 및 점유하는 영역.(기본값 margin : {top: 30, left: 30, right: 30, bottom: 30, isDynamic: true})
+                 top ~ bottom: 기본값 -> 30, 차트의 내역(실제 막대, 라인 등)이 그려질 영역 설정용도
+     -. easing : 애니메이션시 적용될 기본 알고리즘 (linear, elastic, exp, bounce, quad, cubic, sin, circle, back)
+     -. duration: 50~1500 ms(기본값 250), delay: 10~500 ms(기본값 20)
+                    특히 사분면 차트에서는 의미없음.(slider의 speed로 역 계산하여 적용 되어집니다.)
+
+     -. data : 씨투아이에 주입될 데이터 객체로서 직접 주입해도 되며, 다른 옵션 처럼 추후 주입해도 됩니다.
+     -. linearBeginZero : 0(zero)값으로 각각의 축 표시 시작 (기본값 true)
+
+     -. title : 컨포넌트의 제목을 표시하기 위한 장소이며, 특히 데이터 정렬을 적용하는 차트(표준, 피라미드, 파이 등)에서는
+                 정렬 상태를 부 제목을 통해 제공합니다.
+                 .caption: 제목 명칭
+                 .fonts:제목 폰트 (기본값:['helvetica','20px','#434343'])
+                 .textDeco: underline/line-through/overline
+                 .gap: x, y 의 여유 공간 조정용도
+                 .xPos:start, middle, end, yPos: top,middle, bottom,
+                 .subCaption: 주 제목 명칭, subFonts, opacity:1,
+                 .desc: 제목 툴팁
+
+     -. isDev : 개발 모드 여부.
+            .true: 옵션 창에 개발자용 메뉴 표시되며, 실행시 로그 정보 표시
+
+ *** xDim
+     -. caption : x축 제목명
+     -. unitNm : 백만, 명 등의 서술적 단위명칭
+     -. colNm : x축 컬럼명
+     -. format : 정수(,d), 실수(,f 또는 ,.2f), 백분율(% .2%), 상세 내용은 매뉴얼 참조
+     -. captionFonts : x축 제목 표시 폰트 (기본값 : ["helvetica", "14px", "dimgray"])
+     -. fonts: x축의 tick 값 표시하기 위한 폰트 (기본값 : ['helvetica','11px','gray'])
+     -. axisPos : x축의 tick 값 대비 tick 위치 'top', 'bottom' (기본값 : bottom)
+     -. xPos : x축 제목명이 축의 표시 위치 'left', 'middle', 'right' (기본값 : middle)
+     -. dy : x축 제목명을 표시하기 위한 간격 조정 용도(기본값, dy : 35)
+     -. ticks : x축의 표시할 값의 갯수 (기본값 : 10)
+     -. tickPad : x축의 표시할 축과 값의 간격 (기본값 : 0)
+     -. isShow : x축 표시 여부 (기본값 : true)
+     -. showGrid : x축 그리드 표시 여부(기본값 : true)
+     -. xPad: 각 x 값의 폭대비 여유 공간 비율.(0.1)
+     -. xLabel : x축 레이블 표시 방법
+                (isVertical : 한글 세로 표시(기본 false), rotate : -90 ~ 90 권장(기본값 : 없음), dx: 0, dy: 12)
+     -. xWrapLabel : true  & x축 스케일이 ordinal일 경우 제공된 폭에 맞도록 문자를 조정합니다.(V3)
+
+ *** yDim
+     -. caption : y축 제목명
+     -. unitNm : 백만, 명 등의 서술적 단위명칭
+     -. scale : linear
+     -. format : 정수(,d), 실수(,f 또는 ,.2f), 백분율(% .2%), 상세 내용은 매뉴얼 참조
+     -. captionFonts : x축 제목 표시 폰트 (기본값 : ["helvetica", "14px", "dimgray"])
+     -. fonts: x축의 tick 값 표시하기 위한 폰트 (기본값 : ['helvetica','11px','gray'])
+     -. axisPos : y축의 tick 값 대비 tick 위치 'left', 'right' (기본값 : left)
+     -. dx, dy : y축 제목명을 표시하기 위한 간격 조정 용도(기본값, dx: 8, dy : 3)
+     -. ticks : y축의 표시할 값의 갯수 (기본값 : 10)
+     -. isShow : y축 표시 여부 (기본값 : true)
+     -. showGrid : y축 그리드 표시 여부(기본값 : true)
+     -. showLabel : y축 그리드 tick 값 표시 여부(기본값 : true)
+     -. minGap, maxGap: .0 ~ .50 ( 0% ~ 50% ), 최소 및 최대값을 표현하고자 축을 좀더 크게 만든다.
+                없으면 최소/대 실제 값이 상하한 선으로 설정되므로 상하의 여유가 없게 표시됩니다.
+                특히 최소값보다 적게 yBaseValue 설정시, yBaseValue를 최소값으로 설정됩니다.(V3)
+     -. opacity : y축 적용 불투명도, 0 <= n <= 1 (기본값 : 0.7)
+     -. plotLines: 적용 불가능 대상 -> stackbar100%, stackarea100%, stackstream
+             .stackbar, stackarea : relCol이 all & index는 value 만 가능 (즉, 누적 종류는 특정값의 설정만 가능)
+             .groupbar, each : 특정 컬럼을 지정해야 하며, 이때 index는 해당 컬럼의 value or avg 의 선택 설정 가능.
+             .index & value : index가 'value'인 경우, value는 상수 값지정하며,
+                              'avg'인 경우 relCol에 설정된 컬럼을 기준으로 자동 계산합니다.
+             .relCol : 'all' -> 모든 컬럼 대상으로 계산하며, 특정 컬럼 지정시 해당 컬럼으로 계산합니다.
+             .라인만 표시하고 제목을 보여주지 얺으려면 caption을 '' 또는 제거하면 적용.
+             .pos : left,right,rightout, center(기본값)
+             .splitColors : relCol이 특정 컬럼 지정시: 테마라인을 기준으로 위와 아래에 적용될 색상.(예: ['red','green'])
+                                'all'인 경우: 개별 texture 중 1개만 지정해야 함.(예: ['pathHexagons'])
+             .withValue: 해당 값을 함쎄 표시 여부(기본값 : false)
+             .isArrow: 플롯라인의 홧살표 제거시 false.(기본값: true)
+             .dx : 기본값 12
+             .draw: 초기 로드시 표시 여부
+     -. yBaseValue : y축의 시작 값 설정
+     -. captionV : y축 제목을 세로로 표시할 경우로서 주로 한글에 적당합니다.
+
+ *** xy common : xy 공통 사항
+     -. domain: x, y 축 테두리 영역 정보,
+            기본값 -> {stroke:'white', strokeWidth: '1px', opacity:0.7}
+     -. grid: x, y 축 그리드 정보,
+            기본값 -> {stroke:'dimgray', strokeWidth: '1px', dashLength: [0, 0, 0, 0], zeroStroke:'', opacity:0.5} // dashLength: [x,y,y2, zeroStroke]
+     -. box: 차트 전체 박스 테두리 그리기 (1: 표시), splitY는 분할 영역의 중간 x 그리드 용도
+            {top:0, right:0, bottom:1, left: 1, splitY: 1, color: '#eee', strokeWidth:1, opacity: 0.9}
+
+ *** Measures
+     -. caption : 항목(measure) 제목명
+     -. colNm : 컬럼명
+     -. format : 정수(,d), 실수(,f 또는 ,.2f), 백분율(% .2%), 상세 내용은 매뉴얼 참조
+     -. color : 항목 막대 색상.(기본값: ['darkolivegreen', 'crimson', 'steelblue'])
+                1st: 양수, 2dn: 음수, 3rd : 최종 값
+     -. stroke : 항목간 연결 선 색상. (기본값: ['yellow', 'white'])
+                1st: 양수, 2dn: 음수
+     -. fonts: 항목 값 표시하기 위한 폰트 (기본값 : ["helvetica", "11px",'white','steelblue','grey'])
+                3rd: 양수, 4th: 음수, 5th : 최종 값
+     -. showLabel: 항목(measure)값 표시여부 (기본값: 없음)
+     -. draw : 초기 로드시 표시 여부 (기본 : true)
+     -. strokeWidth : 항목간 연결 선 두께.
+
+ *** Legend
+    -. legend : y,y2 항목(measure)표출 정보
+        .id: 범례 컨테이너 id ('#'을 붙이세요)
+        .fonts: 항목 명칭 폰트 (기본값: ["helvetica", "12px"])
+        .padding: 간격 정보 (기본값: '10px 10px 10px 10px')
+        .backColor: 백그라운드 색상 (기본값: 없음)
+        .labelGap: 명칭과 체크 박스의 간격 (기본값: '5px')
+        .itemGap: 개별 항목간의 간격 (기본값: '10px')
+
+ *** Tooltip
+     -. id : 툴팁 Container Id('#'을 붙이세요)
+     -. infoLevel : 툴팁 상세 정보 수준(0 ~ 3 레벨이며, 기본: 0)
+     -. fixedPos : 툴팁을 마우스 포지션에 관계없이 고정위치에 표현하고자 할 경우 사용(기본: xPos:'start', yPos:'top')
+                    미 정의시 클릭한 위치에 표시됩니다.
+     -. displayTips : 자동 툴팁에서 표시될 팁 데이터 건수(라인과 같이 많은 데이터 존재시, 기본값 2: 한 행에 2개씩 표시)
+     -. isUserTip : 사용자 제공 툴팁 여부, 사용자 제공 툴팁이면
+                    아래 함수에서 상기의 id에 데이터를 바인딩 처리를 하면 됩니다.
+
+ *** method
+     -. click, mouseenter, mouseleave, mousemove
+         이름과 같은 이벤트 이며, 동 함수들은 여러 곳에서 발생합니다.
+         또한 개발자는 전달되는 파라메터인 발생 소스(fromSource)와 데이터를 확인하여 추가적인 알고리즘을 처리합니다.
+ */
+    var c2iOption = {
+        isResponsive:true, width:'100%', aspectRatio:'30%', theme: 'linear-gradient(to right, #02111d, #037bb5, #02111d)', // #484848, lang: 'jp',
+        margin:{top:50, left:50, right:30, bottom:60},
+        easing:'elastic', duration:750, delay:20, clamp: false,
+
+        data: undefined, linearBeginZero: true,
+
+        title: {
+            caption:"전기대비 채권 분석",fonts:['맑은 고딕','20px','white'],textDeco:"underline", gap: 5, xPos:'middle', yPos:'top',
+            subCaption:"('2017년 통계 기준)", subFonts: ['맑은 고딕','12px','#a5a5a5','#CFDD3F'], opacity:1,
+            desc:"데모용으로 작성된 차트"
+        },
+
+        xDim:{caption:'월별 채권추이', unitNm:'', colNm:'name', endCaption: '채권잔액', format:'',
+            captionFonts:['맑은 고딕','14px','#ddd'], fonts:['맑은 고딕','11px','white'],
+            axisPos:'bottom', xPos:'middle', dy:45, ticks:0, tickPad: 5, isShow:true, showGrid:true,
+            xPad: 0.2, xLabel:{rotate:0, isVertical: false, dy: 15}, xWrapLabel:false},
+
+        yDim:{caption:'금액', unitNm:'(천만원)', scale:'linear', format:',f',
+            captionFonts:['맑은 고딕','10px','#ddd'], fonts:['맑은 고딕','11px','#bbb'],
+            axisPos:'left', dx:8, dy:3, ticks:4, isShow:true, showGrid:true, minGap: .1, maxGap: .02,
+            opacity:0.9,
+            plotLines:[],
+            yBaseValue:undefined, captionV:true},
+
+        common: {
+            domain:{stroke:'white', strokeWidth: 1, opacity:0.0}, //  x, y 축 테두리 영역
+            grid:{stroke:'dimgray', strokeWidth: 1, opacity:0.5, dashLength:[0,0,5,3], zeroStroke:'yellow'},  //  x, y, y2, zero 라인 dashLength
+            box:{top:0, right:1, bottom:1, left: 1, splitY:1, color: '#eee', strokeWidth:1, opacity: 0.9} // 차트 전체 박스 테두리 그리기
+        },
+
+        measures:[ // plus, minus, end
+            {caption:'전기', colNm:'previous', format:',f', color:['green', '#ff5454', '#0088ff'],
+                stroke:['steelblue', 'yellow'], strokeWidth: 1, dashLength: 5, fonts:['맑은 고딕','12px','orange','#eee','yellow'],
+                showLabel:true, draw:true },
+            {caption:'당기', colNm:'current', format:',f', color:['darkolivegreen', 'crimson', 'steelblue'],
+                stroke:['red', 'white'], strokeWidth: 2, dashLength: 3, fonts:['맑은 고딕','12px','white','#ccc','yellow'],
+                showLabel:true, draw:true }
+        ],
+
+        legend: {id: '#c2iLegend01', fonts:['맑은 고딕','12px'], padding: '5px 10px', backColor:'#444363',
+            labelGap: '4px', itemGap: '8px', yNy2Gap: '25px'},
+        // fixedPos: undefined
+        tooltip: {id: '#tooltip', infoLevel:1, fixedPos: {xPos:'end', yPos:'top'} , displayTips: 3, opacity: 0.9, isUserTip: false, isShow: true },
+        method: {click:getClickInfo, mouseenter:getMouseEnterInfo, mouseleave:getMouseLeaveInfo, mousemove: getMouseMoveInfo},
+        isDev: false
+    };
+
+    var c2iChart = c2i.dumbo.waterfall('#c2iChart01', c2iOption);
+
+    var c2iOption10 = c2i.util.deepClone(c2iOption);
+    c2iOption10.aspectRatio = "40%";
+    c2iOption10.theme = 'linear-gradient(to bottom, #02111d, #037bb5, #02111d)';
+    c2iOption10.easing = "linear";
+    c2iOption10.title.caption = "전기대비 원가 분석";
+    c2iOption10.xDim.caption = "원가 구성";
+    c2iOption10.xDim.endCaption = "손익분기";
+    c2iOption10.yDim.plotLines = [{caption:'', pos:'right', fonts:['맑은 고딕','12px','orange','red'], color:'#7CD3F9',
+        width:'1px', dashLength: 0,index: 'value', value: 0, relCol: 'all', isArrow:false, draw: true}];
+    c2iOption10.measures[0].color = ['darkolivegreen', 'crimson', 'steelblue'];
+    c2iOption10.measures[1].color = ['darkolivegreen', 'crimson', 'steelblue'];
+    c2iOption10.measures.unshift(c2i.util.deepClone(c2iOption10.measures[0]));
+    c2iOption10.measures[0].caption = "전전기";
+    c2iOption10.measures[0].colNm = "previous2";
+
+    c2iOption10.legend.id = "#c2iLegend10";
+    var c2iChart10 = c2i.dumbo.waterfall('#c2iChart10', c2iOption10);
+
+    var c2iOption11 = c2i.util.deepClone(c2iOption10);
+    c2iOption11.easing = "bounce";
+    c2iOption11.theme = "#484848";
+    c2iOption11.title.caption = "전기대비 인원 분석";
+    c2iOption11.xDim.caption = "월별 인원추이";
+    c2iOption11.xDim.endCaption = "기말 인원";
+    c2iOption11.yDim.caption = "인원";
+    c2iOption11.yDim.unitNm = "(명)";
+    c2iOption11.yDim.plotLines = [];
+    c2iOption11.measures.shift();
+    c2iOption11.measures[0].color = ['#0088ff', 'crimson', 'steelblue'];
+    c2iOption11.measures[1].color = ['#0088ff', 'crimson', 'steelblue'];
+    c2iOption11.legend.id = "#c2iLegend11";
+    var c2iChart11 = c2i.dumbo.waterfall('#c2iChart11', c2iOption11);
+    ///////////////////
+    function getClickInfo(fromSource, data){
+        console.log(fromSource.container + ',' + fromSource.selector + ',' + fromSource.key + ' click ');
+        for(var attr in data){
+            console.log(attr + ' : ' + data[attr]);
+        }
+        console.log('keys ', { alter: d3.event.altKey, control: d3.event.ctrlKey, shift: d3.event.shiftKey, meta: d3.event.metaKey })
+    }
+    function getMouseEnterInfo(fromSource, data){
+        console.log(fromSource.container + ',' + fromSource.selector + ' getMouseEnterInfo');
+    }
+    function getMouseLeaveInfo(fromSource, data){
+        console.log(fromSource.container + ',' + fromSource.selector + ' getMouseLeaveInfo')
+    }
+    function getMouseMoveInfo(fromSource, data){
+        console.log(fromSource.container + ',' + fromSource.selector + ' getMouseMoveInfo');
+        document.getElementById('name').innerHTML = '주어진 데이터를 기반으로';
+        document.getElementById('measure').innerHTML = '코딩 확장 구현 하세요..!';
+    }
+    ///////////////////
+    /*
+     대.소문자는 반드시 준수해야 합니다.
+     옵션이 없거나(미정의) '' 이면, 필수요소는 기본값 자동 적용되며 불필요한 옵션은 자동으로 적용되지 않습니다.
+     *** 공통 정보
+     -.width, height : 범례 전체 영역.
+     -.layout  : ['topbottom', 1] 또는 ['leftright', 1] (기본값)
+                 두번째 인자: 각 행 또는 열의 범례 갯수.
+     -.padding : 범례 아이템간 간격.(기본값 5)
+
+     -.rectSize : 범례 사각형 정보.(색상 정보는 관련 차트의 객체정보를 계승함)
+     -.labelGap : 'topbottom'인 경우, 상위 범례 아이템간의 간격(단위 em).
+                  'leftright'인 경우, 좌측 범례 아이템 기준
+     -.labelDistance : 범례 도형과 레이블 명칭과의 간격.
+     -.valueDistance : 범례 값을 표시할 경우 레이블 명칭과의 간격.
+     -.targetChartObject : 대상 차트 객체 변수명.
+     -.isReadOnly : true인 경우 클릭시 반응하지 않음.(기본 범례와 동시 사용시 필요)
+     */
+    /* ======================================================================== */
+    var legendOptions = { // #444363
+        width: 180, height: 25, layout: ['topbottom', 2], padding: 6, theme:'none', // lang: 'jp',
+        duration: 300, delay: 20,
+        rectSize: { width: 16, height: 16, radius: 8, strokeWidth: 0},
+        labelGap : 1.15/* em */, labelDistance: 8, valueDistance: 120,/* 120px */
+        fonts:['맑은 고딕','12px','orange'],
+        targetChartObject: c2iChart,
+        isReadOnly: false
+    };
+
+    d3.csv('assets/data/dumbo/waterSales2017.csv', function(error, root) {
+        c2iChart.data(root).render();
+
+        c2i.ui.legendOrdinal('#c2iLegend01Float', legendOptions).render();
+    });
+
+    d3.csv('assets/data/dumbo/waterCost2017.csv', function(error, root) {
+        c2iChart10.data(root).render();
+    });
+
+    d3.csv('assets/data/dumbo/waterHeadCount2017.csv', function(error, root) {
+        c2iChart11.data(root).render();
+    });
+</script>
+<script>
+    d3.select('#currentLang').attr('class','button').attr('value', 'kr')
+        .attr('title','언어 선택').on('change', change_lang);
+
+    function change_lang(){
+        c2iChart.lang(this.value);
+    }
+
+    d3.select('#save').on('click', exportImage).on('touchstart', exportImage);
+    function exportImage(){
+        c2i.util.exportImage(['#c2iChart01','#c2iChart10','#c2iChart11']);
+        // 'text'(default),'xls' / ''(default),'all'
+        // ('all' : 항목(measures) & 산출된 추가 컬럼을 포함한 모든 컬럼 데이터 출력, '' : 항목(measures)설정 컬럼 데이터만 출력)
+        c2iChart.exportData('xls','');
+        c2iChart10.exportData('','');
+        c2iChart11.exportData('','');
+    }
+
+    d3.select('#c2iGuide').on('click', c2iGuide);
+    d3.select('#c2iGuideClose').on('click', c2iGuideClose);
+
+    function c2iGuide() {
+        d3.select('#c2iGuideInfo').classed('c2iHidden', !d3.select('#c2iGuideInfo').classed('c2iHidden'));
+    }
+    function c2iGuideClose() {
+        d3.select('#c2iGuideInfo').classed('c2iHidden', true);
+    }
+</script>
+</body>
+</html>

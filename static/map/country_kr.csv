@@ -1,0 +1,236 @@
+cd,our_code,name_en,name
+ALA,ALA00,Aland,올란드
+AFG,AFG00,Afghanistan,아프가니스탄
+ALB,ALB00,Albania,알바니아
+DZA,DZA00,Algeria,알제리
+ASM,ASM00,American Samoa,아메리칸 사모아
+AND,AND00,Andorra,안도라
+AGO,AGO00,Angola,앙골라
+ATA,ATA00,Antarctica,남극 대륙
+ATG,ATG00,Antigua and Barbuda,앤티가 바부 다
+ARG,ARG00,Argentina,아르헨티나
+ARM,ARM00,Armenia,아르메니아
+ABW,ABW00,Aruba,아루바
+AUS,AUS00,Australia,호주
+AUT,AUT00,Austria,오스트리아
+AZE,AZE00,Azerbaijan,아제르바이잔
+BHS,BHS00,Bahamas,바하마
+BHR,BHR00,Bahrain,바레인
+BRN,BRN00,Baker Island,베이커 섬
+BGD,BGD00,Bangladesh,방글라데시
+BRB,BRB00,Barbados,바베이도스
+BLR,BLR00,Belarus,벨라루스
+BEL,BEL00,Belgium,벨기에
+BLZ,BLZ00,Belize,벨리즈
+BEN,BEN00,Benin,베냉
+BTN,BTN00,Bhutan,부탄
+BOL,BOL00,Bolivia,볼리비아
+BES,BE00S,"Bonaire, Saint Eustatius and Saba","보네르, 세인트 유스타 티 우스, 사바"
+BIH,BIH00,Bosnia and Herzegovina,보스니아 헤르체고비나
+BWA,BWA00,Botswana,보츠와나
+BRA,BRA00,Brazil,브라질
+VGB,VGB00,British Virgin Islands,영국령 버진 아일랜드
+BGR,BGR00,Bulgaria,불가리아
+BFA,BFA00,Burkina Faso,부키 나 파소
+MMR,MMR00,Burma,버마
+BDI,BDI00,Burundi,부룬디
+KHM,KHM00,Cambodia,캄보디아
+CMR,CMR00,Cameroon,카메룬
+CAN,CAN00,Canada,캐나다
+CPV,CPV00,Cape Verde,카보 베르데
+CYM,CYM00,Cayman Islands,케이맨 제도
+CAF,CAF00,Central African Republic,중앙 아프리카 공화국
+TCD,TCD00,Chad,차드
+CHL,CHL00,Chile,칠레
+CHN,CHN00,China,중국
+CXR,CXR00,Christmas Island,크리스마스 섬
+COL,COL00,Colombia,콜롬비아
+COM,COM00,Comoros,코모로
+COG,COG00,Congo,콩고
+COD,COD00,Congo (Democratic Republic of the),콩고 민주 공화국
+COK,COK00,Cook Islands,쿡 제도
+CRI,CRI00,Costa Rica,코스타리카
+HRV,HRV00,Croatia,크로아티아
+CUB,CUB00,Cuba,쿠바
+CUW,CUW00,Curaçao,쿠라 사오
+CYP,CYP00,Cyprus,키프로스
+CZE,CZE00,Czech Republic,체코 공화국
+CIV,CIV00,Côte d'Ivoire,코트 디부 아르
+DNK,DNK00,Denmark,덴마크
+DJI,DJI00,Djibouti,지부티
+DMA,DMA00,Dominica,도미니카 공화국
+DOM,DOM00,Dominican Republic,도미니카 공화국
+ECU,ECU00,Ecuador,에콰도르
+EGY,EGY00,Egypt,이집트
+SLV,SLV00,El Salvador,엘살바도르
+GNQ,GNQ00,Equatorial Guinea,적도 기니
+ERI,ERI00,Eritrea,에리트레아
+EST,EST00,Estonia,에스토니아
+ETH,ETH00,Ethiopia,에티오피아
+FLK,FLK00,Falkland Islands (Islas Malvinas),포클랜드 제도
+FRO,FRO00,Faroe Islands,페로 제도
+FSM,FSM00,Federated States of Micronesia,미크로네시아 연방
+FJI,FJI00,Fiji,피지
+FIN,FIN00,Finland,핀란드
+FRA,FRA00,France,프랑스
+GUF,GUF00,French Guiana,프랑스 령 기아나
+PYF,PYF00,French Polynesia,프랑스 령 폴리네시아의
+ATF,ATF00,French Southern and Antarctic Lands,프랑스 남부 및 남극 지방
+GAB,GAB00,Gabon,가봉
+GMB,GMB00,Gambia,감비아
+PSE,PSE00,Gaza Strip,가자 지구
+GEO,GEO00,Georgia,그루지야
+DEU,DEU00,Germany,독일
+GHA,GHA00,Ghana,가나
+GIB,GIB00,Gibraltar,지브롤터
+GRC,GRC00,Greece,그리스
+GRL,GRL00,Greenland,그린란드
+GRD,GRD00,Grenada,그레나다
+GLP,GLP00,Guadeloupe,과들루프
+GUM,GUM00,Guam,괌
+GTM,GTM00,Guatemala,과테말라
+GGY,GGY00,Guernsey,건지 섬
+GIN,GIN00,Guinea,기니
+GNB,GNB00,Guinea-Bissau,기니 비사우
+GUY,GUY00,Guyana,가이아나
+HTI,HTI00,Haiti,아이티
+HMD,HMD00,Heard Island and McDonald Islands,허드 섬 및 맥도널드 제도
+HND,HND00,Honduras,온두라스
+HKG,HKG00,Hong Kong,홍콩
+HUN,HUN00,Hungary,헝가리
+ISL,ISL00,Iceland,아이슬란드
+IND,IND00,India,인도
+IDN,IDN00,Indonesia,인도네시아 공화국
+IRN,IRN00,Iran,이란
+IRQ,IRQ00,Iraq,이라크
+IRL,IRL00,Ireland,아일랜드
+IMN,IMN00,Isle of Man,아일 오브 맨
+ISR,ISR00,Israel,이스라엘
+ITA,ITA00,Italy,이탈리아
+JAM,JAM00,Jamaica,자메이카
+JPN,JPN00,Japan,일본
+JEY,JEY00,Jersey,저지
+JOR,JOR00,Jordan,요르단
+KAZ,KAZ00,Kazakhstan,카자흐스탄
+KEN,KEN00,Kenya,케냐
+UMI,UMI00,Kingman Reef,킹먼 암초
+KIR,KIR00,Kiribati,키리바시
+KWT,KWT00,Kuwait,쿠웨이트
+KGZ,KGZ00,Kyrgyzstan,키르기즈스탄
+LAO,LAO00,Laos,라오스
+LVA,LVA00,Latvia,라트비아
+LBN,LBN00,Lebanon,레바논
+LSO,LSO00,Lesotho,레소토
+LBR,LBR00,Liberia,라이베리아
+LBY,LBY00,Libya,리비아
+LIE,LIE00,Liechtenstein,리히텐슈타인
+LTU,LTU00,Lithuania,리투아니아
+LUX,LUX00,Luxembourg,룩셈부르크
+MAC,MAC00,Macau,마카오
+MKD,MKD00,Macedonia,마케도니아
+MDG,MDG00,Madagascar,마다가스카르
+MWI,MWI00,Malawi,말라위
+MYS,MYS00,Malaysia,말레이시아
+MLI,MLI00,Mali,말리
+MLT,MLT00,Malta,몰타
+MTQ,MTQ00,Martinique,마르티니크
+MRT,MRT00,Mauritania,모리타니
+MUS,MUS00,Mauritius,모리셔스
+MYT,MYT00,Mayotte,마 요트
+MEX,MEX00,Mexico,멕시코
+MDA,MDA00,Moldova,몰도바
+MCO,MCO00,Monaco,모나코
+MNG,MNG00,Mongolia,몽골리아
+MNE,MNE00,Montenegro,몬테네그로
+MSR,MSR00,Montserrat,몬세 라트
+MAR,MAR000,Morocco,모로코
+MOZ,MOZ00,Mozambique,모잠비크
+NAM,NAM00,Namibia,나미비아
+NPL,NPL00,Nepal,네팔
+NLD,NLD00,Netherlands,네덜란드
+NCL,NCL00,New Caledonia,뉴 칼레도니아
+NZL,NZL00,New Zealand,뉴질랜드
+NIC,NIC00,Nicaragua,니카라과
+NER,NER00,Niger,니제르
+NGA,NGA00,Nigeria,나이지리아
+NIU,NIU00,Niue,니우에
+PRK,PRK00,North Korea,북한
+MNP,MNP00,Northern Mariana Islands,북 마리아나 제도
+NOR,NOR00,Norway,노르웨이
+OMN,OMN00,Oman,오만
+PAK,PAK00,Pakistan,파키스탄
+PLW,PLW00,Palau,팔라우
+VUT,VUT00,Palestina,팔레스타인
+PAN,PAN00,Panama,파나마
+PNG,PNG00,Papua New Guinea,파푸아 뉴기니
+PRY,PRY00,Paraguay,파라과이
+PER,PER00,Peru,페루
+PHL,PHL00,Philippines,필리핀 제도
+POL,POL00,Poland,폴란드
+PRT,PRT00,Portugal,포르투갈
+PRI,PRI00,Puerto Rico,푸에르토 리코
+QAT,QAT00,Qatar,카타르
+REU,REU00,Reunion,재결합
+ROU,ROU00,Romania,루마니아
+RUS,RUS00,Russia,러시아 제국
+RWA,RWA00,Rwanda,르완다
+SHN,SHN00,Saint Helena,세인트 헬레나
+KNA,KNA00,Saint Kitts and Nevis,세인트 키츠 네비스
+LCA,LCA00,Saint Lucia,세인트 루시아
+MAF,MAF00,Saint Martin,세인트 마틴
+SPM,SPM00,Saint Pierre and Miquelon,생 피에르 미 클롱
+VCT,VCT00,Saint Vincent and the Grenadines,세인트 빈센트 그레나딘
+WSM,WSM00,Samoa,사모아
+SMR,SMR00,San Marino,산 마리노
+STP,STP00,Sao Tome and Principe,상투 메 프린시 페
+SAU,SAU00,Saudi Arabia,사우디 아라비아
+SEN,SEN00,Senegal,세네갈
+SRB,SRB00,Serbia,세르비아
+SYC,SYC00,Seychelles,세이셸
+SLE,SLE00,Sierra Leone,시에라 리온
+SGP,SGP00,Singapore,싱가포르
+SXM,SXM00,Sint Maarten,신트 마르텐
+SVK,SVK00,Slovakia,슬로바키아
+SVN,SVN00,Slovenia,슬로베니아
+SLB,SLB00,Solomon Islands,솔로몬 제도
+SOM,SOM00,Somalia,소말리아
+ZAF,ZAF00,South Africa,남아프리카
+SGS,SGS00,South Georgia and the South Sandwich Isla,사우스 조지아와 사우스 샌드위치 이슬라
+KOR,KOR00,South Korea,대한민국
+ESP,ESP00,Spain,스페인
+LKA,LKA00,Sri Lanka,스리랑카
+SDN,SDN00,Sudan,수단
+SUR,SUR00,Suriname,수리남
+SJM,SJM00,Svalbard and Jan Mayen,스발 바르와 얀 메이 엔
+SWZ,SWZ00,Swaziland,스와질란드
+SWE,SWE00,Sweden,스웨덴
+CHE,CHE00,Switzerland,스위스
+SYR,SYR00,Syria,시리아
+TWN,TWN00,Taiwan,대만
+TJK,TJK00,Tajikistan,타지키스탄
+TZA,TZA00,Tanzania,탄자니아
+THA,THA00,Thailand,태국
+TLS,TLS00,Timor-Leste,동 티모르
+TGO,TGO00,Togo,가다
+TON,TON00,Tonga,통가
+TTO,TTO00,Trinidad and Tobago,트리니다드 토바고
+TUN,TUN00,Tunisia,튀니지
+TUR,TUR00,Turkey,터키
+TKM,TKM00,Turkmenistan,투르크 메니스탄
+TCA,TCA00,Turks and Caicas Islands,터크 스 케이 커스 제도
+UGA,UGA00,Uganda,우간다
+UKR,UKR00,Ukraine,우크라이나
+ARE,ARE00,United Arab Emirates,아랍 에미리트
+GBR,GBR00,United Kingdom,영국
+USA,USA00,United States,미국
+URY,URY00,Uruguay,우루과이
+UZB,UZB00,Uzbekistan,우즈베키스탄
+VAT,VAT00,Vatican City,바티칸 시티
+VEN,VEN00,Venezuela,베네수엘라
+VNM,VNM00,Vietnam,베트남
+VIR,VIR00,Virgin Islands,버진 아일랜드
+WLF,WLF00,Wallis and Futuna,월리스 푸 투나
+ESH,ESH00,Western Sahara,서사하라
+YEM,YEM00,Yemen,예멘 아랍 공화국
+ZMB,ZMB00,Zambia,잠비아
+ZWE,ZWE00,Zimbabwe,짐바브웨

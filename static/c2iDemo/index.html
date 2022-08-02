@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">  
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="keywords" content="캐주얼인사이트,데이터-와,데이터-와우,비투아이랩,데이터댐,상관분석,단변량분석,평행좌표,기사 분석,워드 클라우드,지도,리프렛,대시보드,시각화,비주얼라이제이션,씨투아이,데이터-와 클라우드,빅데이터,비아이"/>
+  <meta name="keywords" content="相关分析, 单变量分析, 平行坐标, 文章分析, 可视化,数据和云,大数据"/>
+  <meta name="keywords" content="カジュアルインサイト,データ-と,データ-ワウ,ビトアイラップ,データダム,相関分析,単変量分析,平行座標,記事分析,ワードクラウド,マップ,リーフレット,ダッシュボード ,視覚化,ビジュアライゼーション,シーツーアイ,データとクラウド,ビッグデータ,ビアイ"/>
+  <meta name="keywords" content="Casual-Insight,Data-Wow,B2i-Lab,Data-Dam,Correlation,Univarate,Parallel Coordinate,Word Cloud,Map,Leaflet,DDMV,BI,Visualization,Public Data,C2i,C2i-Cloud,Big Data,Dashboard,Data Warehouse,DW,Mining" />
+  <meta name="description" content="모든 이를 위한 데이터(공공, 거래소 데이터) 제공 다차원 시각화 서비스,Data-Wow Multi-dimensional Visualization for Everyone">
+
+  <meta property="og:title" content="데이터-와(Data-Wow): Casual-Insights">
+  <meta property="og:type" content="website" />
+  <meta property="og:description" content="데이터-와 다차원 시각화(Data-Wow: Data Multi-dimensional Visualization for Everyone)는 탐색적 정보분석 및 시각화를 제공하는 솔루션으로서, 업로드 및 Open API 데이터로 부터 분석까지 모든 사람들을 위한 솔루션입니다.">
+  <meta property="og:image" content="http:///b2i-lab.com/favicon.png">
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="400" />
+  <meta property="og:image:height" content="300" />
+  <meta property="og:site_name" content="http://b2i-lab.com">
+  <meta property="og:url" content="http:///b2i-lab.com">
+  <title>C2i-Chart</title>
+
+  <!-- CSS -->
+  <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+  
+  <link href="assets/css/style.css" rel="stylesheet">
+  <link href="assets/css/c2iTable.css" rel="stylesheet">
+  <!-- Web Fonts -->
+  <link href='//fonts.googleapis.com/css?family=Lato:300,400,700.900,300italic,400italic' rel='stylesheet' type='text/css'>
+  <link rel="shortcut icon" type="image/png" href="favicon.png" />
+
+  <script src="assets/js/modernizr.custom.79639.js"></script>
+  <noscript>
+			<link href="assets/css/no-js.css" rel="stylesheet">
+		</noscript>
+</head>
+
+<body id="c2iDemo" data-spy="scroll">
+   <!-- Fixed Navbar -->
+   <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container" style="text-align: center; font-weight: 500; color:#fff; margin-top: 10px;">
+      <span style="font-size: 24px;">씨투아이 시각화 컴포넌트 데모</span>
+      <p>(C2i: Chart Intelligence & Insights)</p> 
+    </div>
+    <!-- /container -->
+  </nav>
+  <!-- /navbar -->
+  <!-- C2i Demo Wrap -->
+  <section id="c2iDemo" class="contactwrap">
+    <div class="container">
+      <h4>아래 데모는 예산/실적,계층기반을 제외하면, 인포그래픽 or 단순 컴포넌트 입니다.</h4>
+      <div class="row icons text-center">
+        <div class="col-lg-4">
+          <a href="c2i_Pyramid.html">
+            <h4><i class="glyphicon glyphicon-play-circle" style="top: 2px;right: 8px;"></i>피라미드 차트 시각화</h4>
+            <img src="./image/c2i_Pyramid.png" alt="c2i_Pyramid" width='100%'></a>
+          <p>이진 분석 패턴 처리 용이.</p>
+        </div>
+        <div class="col-lg-4">
+          <a href="c2i_Motion.html">
+            <h4><i class="glyphicon glyphicon-play-circle" style="top: 2px;right: 8px;"></i>모션 차트 시각화</h4>
+            <img src="./image/c2i_Motion.png" alt="c2i_Motion" width='100%'></a>
+          </a>
+          <p>유명한 모션 차트입니다.</p>
+        </div>
+        <div class="col-lg-4">
+          <a href="c2i_Hi.html">
+            <h4><i class="glyphicon glyphicon-play-circle" style="top: 2px;right: 8px;"></i>계층 기반 시각화</h4>
+            <img src="./image/c2i_Hi.png" alt="c2i_Hi" width='100%'></a>
+          </a>
+          <p>계층(Hierarchical)기반 데이터 분석 용도.</p>
+          <p>동적 통계정보 제공.</p>
+        </div>
+      </div>
+
+      <div class="row icons text-center">
+        <div class="col-lg-4">
+          <a href="c2i_Std3D.html">
+            <h4><i class="glyphicon glyphicon-play-circle" style="top: 2px;right: 8px;"></i>3D기반 차트 시각화</h4>
+            <img src="./image/c2i_Std3D.png" alt="c2i_Std3D" width='100%'></a>
+          <p>기업 대시보드 및 공공데이터 제공 UI로 안성마춤.</p>
+        </div>
+        <div class="col-lg-4">
+          <a href="c2i_Std3DWatch.html">
+            <h4><i class="glyphicon glyphicon-play-circle" style="top: 2px;right: 8px;"></i>키오스크 및 생산실적 3D 시각화</h4>
+            <img src="./image/c2i_Std3DWatch.png" alt="c2i_Std3DWatch" width='100%'></a>
+          </a>
+          <p>스마트 팩토리용 정보 제공<br>(키오스크 용도 추천)</p>
+        </div>
+        <div class="col-lg-4">
+          <a href="c2i_CalView.html">
+            <h4><i class="glyphicon glyphicon-play-circle" style="top: 2px;right: 8px;"></i>캘린더-뷰 패턴 시각화</h4>
+            <img src="./image/c2i_CalView.png" alt="c2i_CalView" width='100%'></a>
+          </a>
+          <p>특정 년도에 따른 해당 차원(지역,부서,계정,담당자 등)의<br>월별 및 일별 항목(Measure)분석.<br>동 데모에서는 20년간 일별 매출 및 주가 데이터 제공</p>
+        </div>
+      </div>
+      <div class="row icons text-center">
+        <div class="col-lg-4">
+          <a href="c2i_Budget.html">
+            <h4><i class="glyphicon glyphicon-play-circle" style="top: 2px;right: 8px;"></i>예산/실적 패턴 시각화</h4>
+            <img src="./image/c2i_Budget.png" alt="c2i_Std3D" width='100%'></a>
+          </a>
+          <p>예산,계획,목표대비 실적 데이터 분석 용도.</p>
+        </div>
+        <div class="col-lg-4">
+          <a href="c2i_CompSliderRange.html">
+            <h4><i class="glyphicon glyphicon-play-circle" style="top: 2px;right: 8px;"></i>UI/UX 슬라이더</h4>
+            <img src="./image/c2i_CompSliderRange.png" alt="c2i_CompSliderRange" width='100%'></a>
+          </a>
+          <p>수평,수직 범위 및 단일 값 슬라이더.<br>(수평 범위만 데모)</p>
+        </div>
+        <div class="col-lg-4">
+          <a href="c2i_Waterfall.html">
+            <h4><i class="glyphicon glyphicon-play-circle" style="top: 2px;right: 8px;"></i>Waterfall(or Cascade)</h4>
+            <img src="./image/c2i_Waterfall.png" alt="c2i_Waterfall" width='100%'></a>
+          </a>
+          <p>재고,인사,외상 등의 인사이트 제공.(멍텅구리 컴포넌트)<br>C2i 특징: 그룹 패턴 지원.(전기, 전전기 대비 비교 개념)</p>
+        </div>
+      </div>
+      <div class="row icons text-center">
+        <div class="col-lg-4">
+          <a href="c2i_Bullet.html">
+            <h4><i class="glyphicon glyphicon-play-circle" style="top: 2px;right: 8px;"></i>Bullet 패턴 시각화</h4>
+            <img src="./image/c2i_Bullet.png" alt="c2i_Bullet" width='100%'></a>
+          </a>
+          <p>다양한 기준으로 비교할 데이터 분석 용도.</p>
+          <p>멍텅구리의 동적 진화된 컴포넌트</p>
+        </div>
+        <div class="col-lg-4">
+          <a href="c2i_PaCoord.html">
+            <h4><i class="glyphicon glyphicon-play-circle" style="top: 2px;right: 8px;"></i>평행 좌표 시각화</h4>
+            <img src="./image/c2i_PaCoord.png" alt="c2i_PaCoord" width='100%'></a>
+          </a>
+          <p>다차원 항목 데이터 분석 용도.</p>
+          <p>동적 통계정보 제공.</p>
+        </div>
+        <div class="col-lg-4">
+          <a href="c2iColorPicker.html">
+            <h4><i class="glyphicon glyphicon-play-circle" style="top: 2px;right: 8px;"></i>색상 선택기</h4>
+            <img src="./image/c2iColorPicker.png" alt="c2iColorPicker" width='100%'></a>
+          </a>
+          <p>멍텅구리 UI 컴포넌트의 색상 선택기 제공</p>
+        </div>
+      </div>
+      <!-- /row -->
+      <br><br><br>
+    </div>
+    <!-- /container -->
+  </section>
+  <!-- /C2i Demo wrap -->
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="assets/js/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="assets/js/bootstrap.min.js"></script>
+  <script src="assets/js/jquery.easing.min.js"></script>
+  <script src="assets/js/jquery.ba-cond.min.js"></script>
+  <script src="assets/js/jquery.slitslider.js"></script>
+  <!-- <script src="assets/js/retina.min.js"></script> -->
+  <script src="assets/js/functions.js"></script>
+
+  <script src="assets/lib/d3.min.js" charset="utf-8"></script>
+  <script src="assets/lib/three.min.js"></script>
+  <script src="assets/js/c2i.v2.min.js"></script>
+  <script src="assets/i18n/c2i_kr.js"></script>
+</body>
+</html>

@@ -1,0 +1,236 @@
+cd,our_code,name
+ALA,ALA00,Aland
+AFG,AFG00,Afghanistan
+ALB,ALB00,Albania
+DZA,DZA00,Algeria
+ASM,ASM00,American Samoa
+AND,AND00,Andorra
+AGO,AGO00,Angola
+ATA,ATA00,Antarctica
+ATG,ATG00,Antigua and Barbuda
+ARG,ARG00,Argentina
+ARM,ARM00,Armenia
+ABW,ABW00,Aruba
+AUS,AUS00,Australia
+AUT,AUT00,Austria
+AZE,AZE00,Azerbaijan
+BHS,BHS00,Bahamas
+BHR,BHR00,Bahrain
+BRN,BRN00,Baker Island
+BGD,BGD00,Bangladesh
+BRB,BRB00,Barbados
+BLR,BLR00,Belarus
+BEL,BEL00,Belgium
+BLZ,BLZ00,Belize
+BEN,BEN00,Benin
+BTN,BTN00,Bhutan
+BOL,BOL00,Bolivia
+BES,BE00S,"Bonaire, Saint Eustatius and Saba"
+BIH,BIH00,Bosnia and Herzegovina
+BWA,BWA00,Botswana
+BRA,BRA00,Brazil
+VGB,VGB00,British Virgin Islands
+BGR,BGR00,Bulgaria
+BFA,BFA00,Burkina Faso
+MMR,MMR00,Burma
+BDI,BDI00,Burundi
+KHM,KHM00,Cambodia
+CMR,CMR00,Cameroon
+CAN,CAN00,Canada
+CPV,CPV00,Cape Verde
+CYM,CYM00,Cayman Islands
+CAF,CAF00,Central African Republic
+TCD,TCD00,Chad
+CHL,CHL00,Chile
+CHN,CHN00,China
+CXR,CXR00,Christmas Island
+COL,COL00,Colombia
+COM,COM00,Comoros
+COG,COG00,Congo
+COD,COD00,Congo (Democratic Republic of the)
+COK,COK00,Cook Islands
+CRI,CRI00,Costa Rica
+HRV,HRV00,Croatia
+CUB,CUB00,Cuba
+CUW,CUW00,Curaçao
+CYP,CYP00,Cyprus
+CZE,CZE00,Czech Republic
+CIV,CIV00,Côte d'Ivoire
+DNK,DNK00,Denmark
+DJI,DJI00,Djibouti
+DMA,DMA00,Dominica
+DOM,DOM00,Dominican Republic
+ECU,ECU00,Ecuador
+EGY,EGY00,Egypt
+SLV,SLV00,El Salvador
+GNQ,GNQ00,Equatorial Guinea
+ERI,ERI00,Eritrea
+EST,EST00,Estonia
+ETH,ETH00,Ethiopia
+FLK,FLK00,Falkland Islands (Islas Malvinas)
+FRO,FRO00,Faroe Islands
+FSM,FSM00,Federated States of Micronesia
+FJI,FJI00,Fiji
+FIN,FIN00,Finland
+FRA,FRA00,France
+GUF,GUF00,French Guiana
+PYF,PYF00,French Polynesia
+ATF,ATF00,French Southern and Antarctic Lands
+GAB,GAB00,Gabon
+GMB,GMB00,Gambia
+PSE,PSE00,Gaza Strip
+GEO,GEO00,Georgia
+DEU,DEU00,Germany
+GHA,GHA00,Ghana
+GIB,GIB00,Gibraltar
+GRC,GRC00,Greece
+GRL,GRL00,Greenland
+GRD,GRD00,Grenada
+GLP,GLP00,Guadeloupe
+GUM,GUM00,Guam
+GTM,GTM00,Guatemala
+GGY,GGY00,Guernsey
+GIN,GIN00,Guinea
+GNB,GNB00,Guinea-Bissau
+GUY,GUY00,Guyana
+HTI,HTI00,Haiti
+HMD,HMD00,Heard Island and McDonald Islands
+HND,HND00,Honduras
+HKG,HKG00,Hong Kong
+HUN,HUN00,Hungary
+ISL,ISL00,Iceland
+IND,IND00,India
+IDN,IDN00,Indonesia
+IRN,IRN00,Iran
+IRQ,IRQ00,Iraq
+IRL,IRL00,Ireland
+IMN,IMN00,Isle of Man
+ISR,ISR00,Israel
+ITA,ITA00,Italy
+JAM,JAM00,Jamaica
+JPN,JPN00,Japan
+JEY,JEY00,Jersey
+JOR,JOR00,Jordan
+KAZ,KAZ00,Kazakhstan
+KEN,KEN00,Kenya
+UMI,UMI00,Kingman Reef
+KIR,KIR00,Kiribati
+KWT,KWT00,Kuwait
+KGZ,KGZ00,Kyrgyzstan
+LAO,LAO00,Laos
+LVA,LVA00,Latvia
+LBN,LBN00,Lebanon
+LSO,LSO00,Lesotho
+LBR,LBR00,Liberia
+LBY,LBY00,Libya
+LIE,LIE00,Liechtenstein
+LTU,LTU00,Lithuania
+LUX,LUX00,Luxembourg
+MAC,MAC00,Macau
+MKD,MKD00,Macedonia
+MDG,MDG00,Madagascar
+MWI,MWI00,Malawi
+MYS,MYS00,Malaysia
+MLI,MLI00,Mali
+MLT,MLT00,Malta
+MTQ,MTQ00,Martinique
+MRT,MRT00,Mauritania
+MUS,MUS00,Mauritius
+MYT,MYT00,Mayotte
+MEX,MEX00,Mexico
+MDA,MDA00,Moldova
+MCO,MCO00,Monaco
+MNG,MNG00,Mongolia
+MNE,MNE00,Montenegro
+MSR,MSR00,Montserrat
+MAR,Mar.00,Morocco
+MOZ,MOZ00,Mozambique
+NAM,NAM00,Namibia
+NPL,NPL00,Nepal
+NLD,NLD00,Netherlands
+NCL,NCL00,New Caledonia
+NZL,NZL00,New Zealand
+NIC,NIC00,Nicaragua
+NER,NER00,Niger
+NGA,NGA00,Nigeria
+NIU,NIU00,Niue
+PRK,PRK00,North Korea
+MNP,MNP00,Northern Mariana Islands
+NOR,NOR00,Norway
+OMN,OMN00,Oman
+PAK,PAK00,Pakistan
+PLW,PLW00,Palau
+VUT,VUT00,Palestina
+PAN,PAN00,Panama
+PNG,PNG00,Papua New Guinea
+PRY,PRY00,Paraguay
+PER,PER00,Peru
+PHL,PHL00,Philippines
+POL,POL00,Poland
+PRT,PRT00,Portugal
+PRI,PRI00,Puerto Rico
+QAT,QAT00,Qatar
+REU,REU00,Reunion
+ROU,ROU00,Romania
+RUS,RUS00,Russia
+RWA,RWA00,Rwanda
+SHN,SHN00,Saint Helena
+KNA,KNA00,Saint Kitts and Nevis
+LCA,LCA00,Saint Lucia
+MAF,MAF00,Saint Martin
+SPM,SPM00,Saint Pierre and Miquelon
+VCT,VCT00,Saint Vincent and the Grenadines
+WSM,WSM00,Samoa
+SMR,SMR00,San Marino
+STP,STP00,Sao Tome and Principe
+SAU,SAU00,Saudi Arabia
+SEN,SEN00,Senegal
+SRB,SRB00,Serbia
+SYC,SYC00,Seychelles
+SLE,SLE00,Sierra Leone
+SGP,SGP00,Singapore
+SXM,SXM00,Sint Maarten
+SVK,SVK00,Slovakia
+SVN,SVN00,Slovenia
+SLB,SLB00,Solomon Islands
+SOM,SOM00,Somalia
+ZAF,ZAF00,South Africa
+SGS,SGS00,South Georgia and the South Sandwich Isla
+KOR,KOR00,South Korea
+ESP,ESP00,Spain
+LKA,LKA00,Sri Lanka
+SDN,SDN00,Sudan
+SUR,SUR00,Suriname
+SJM,SJM00,Svalbard and Jan Mayen
+SWZ,SWZ00,Swaziland
+SWE,SWE00,Sweden
+CHE,CHE00,Switzerland
+SYR,SYR00,Syria
+TWN,TWN00,Taiwan
+TJK,TJK00,Tajikistan
+TZA,TZA00,Tanzania
+THA,THA00,Thailand
+TLS,TLS00,Timor-Leste
+TGO,TGO00,Togo
+TON,TON00,Tonga
+TTO,TTO00,Trinidad and Tobago
+TUN,TUN00,Tunisia
+TUR,TUR00,Turkey
+TKM,TKM00,Turkmenistan
+TCA,TCA00,Turks and Caicas Islands
+UGA,UGA00,Uganda
+UKR,UKR00,Ukraine
+ARE,ARE00,United Arab Emirates
+GBR,GBR00,United Kingdom
+USA,USA00,United States
+URY,URY00,Uruguay
+UZB,UZB00,Uzbekistan
+VAT,VAT00,Vatican City
+VEN,VEN00,Venezuela
+VNM,VNM00,Vietnam
+VIR,VIR00,Virgin Islands
+WLF,WLF00,Wallis and Futuna
+ESH,ESH00,Western Sahara
+YEM,YEM00,Yemen
+ZMB,ZMB00,Zambia
+ZWE,ZWE00,Zimbabwe

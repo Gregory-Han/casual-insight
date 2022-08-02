@@ -1,0 +1,10 @@
+name,group,economy_mpg,cylinders,displacement_cc,power_hp,weight_lb,0-60_mph_s,year
+Volvo 264GL,Volvo,17,6,163,125,3140,13.6,78
+AMC Ambassador Brougham,AMC,13,8,360,175,3821,11,73
+Buick Century Limited,Buick,25,6,181,110,2945,16.4,82
+AMC Ambassador DPL,AMC,15,8,390,190,3850,8.5,70
+BMW 2002,BMW,26,4,121,113,2234,12.5,70
+Volvo Diesel,Volvo,30.7,6,145,76,3160,19.6,81
+Buick Century Special,Buick,20.6,6,231,105,3380,15.8,78
+BMW 320i,BMW,21.5,4,121,110,2600,12.8,77
+Buick Century 350,Buick,13,8,350,175,4100,13,73

@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>평행좌표 for C2I(Parallel Coordinates)</title>
+    <script src="assets/lib/d3.min.js" charset="utf-8"></script>
+    <script src="assets/lib/three.min.js"></script>
+
+    <script src="assets/js/c2i.v2.min.js"></script>
+
+    <script src="assets/i18n/c2i_kr.js"></script>
+    <!-- 다국어 사용시 아래 스크립트 필요합니다. (사용하지 않으면 제거) -->
+    <script src="assets/i18n/c2i_en.js"></script>
+    <script src="assets/i18n/c2i_jp.js"></script>
+    <script src="assets/i18n/c2i_ch.js"></script>
+
+    <!-- 정품 인증번호 발급 및 적용시 아래 스크립트 필요합니다. -->
+    <!--<script src="../assets/c2iLicenseKey.js"></script>-->
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/c2i.v2.min.css">
+    <link rel="stylesheet" href="assets/css/demo.css">
+    <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+    <style>
+        body {
+            background: #484848;
+        }
+        .c2iLegendFloat{
+            position: absolute;
+            left: 20px;
+            top: 10px;
+            z-index: 100;
+        }
+        .gridArea {
+            height: 150px;
+        }
+        pre {
+            width: 100%;
+            tab-size: 15;
+            font-size: 10px;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="col-md-1">
+        <a href="index.html#c2iDemo" style="color: white"><div class="btn btn-primary btn-sm btn-group-justified">홈</div></a>
+    </div>
+    <div class="col-md-1">
+        <div id="c2iGuide" class="btn btn-primary btn-sm btn-group-justified">도움말</div>
+    </div>
+    <div class="col-sm-6 col-md-6 col-lg-6">
+        <div id="c2iGridTest" class="btn btn-primary btn-sm">데이터 보기</div>
+        <div id="save" class="btn btn-warning btn-sm">익스포트</div>
+    </div>
+
+    <div id="c2iGuideInfo" class=" c2iHidden c2iGuideInfo">
+        <div class="container">
+            <button id="c2iGuideClose" class="btn btn-primary btn-sm float my-float">닫기</button>
+            <div class="page-header">
+                <h1 class="text-primary">씨투아이 평행좌표(Parallel Coordinates) 컴포넌트</h1>
+                <h3>다차원 데이터를 표현하는 컴포넌트.</h3>
+                <p>1.각 항목별 지원 유형: Ordinal, Linear, Sqrt, Log, Time</p>
+                <p>&nbsp;--> Ordinal: 지역명, Sqrt: 지역총생산/인, Log: 65세 이상,소득총액. (Log,Sqrt은 구간별 축 스케일의 차이가 있지요?)</p>
+                <p>2.각 항목값 표시 방법: 좌측, 우측 택일. 그러나 처음과 끝은 각각 좌,우측으로 자동 할당.</p>
+                <p>3.항목 드래그시 상황에 맞게 항목값 좌,우 교체.</p>
+            </div>
+
+            <!-- 데모 따라하기-->
+            <h3>데모 따라하기</h3>
+            <div class="row">
+                <div class="col-md-12">0.상위 항목 제목을 드래그 이동해 보세요.</div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">1.항목 값의 범위를 선택해 보세요. 아래 통계정보가 변경 됩니다.</div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">2.색상 라인 또는 명칭의 마우스 오버시 해당하는 값과 현재 선택한 전체/부분 영역과 비교합니다.</div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">3.초기화: 차트 영역에서 더블클릭 하세요.</div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">4.많은 데이터 표출용이라 선 두께가 1px 입니다. 이로 인해 마우스 오버시 화면 떨림이 발생 가능합니다.(정확한 마우스 위치?)</div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">9.브라우져 크기를 조정해 보세요.</div>
+            </div>
+
+            <!-- 데이터 구조-->
+            <h3>데이터 구조: csv, tsv, dsv 등</h3>
+            <div class="row">
+                <div class="col-md-2">0.csv</div>
+                <div class="col-md-9">
+                    <pre><code>
+State,_5세미만,_5_13세,_14_17세,_18_24세,_25_44세,_45_64세,_65세이상,IncomeAvg,TaxAvg,GRDP,spentPer
+AL,310504,552339,259034,450818,1231572,1215966,641667,34000,7000,35758,8877
+AK,121746,201192,89702,147606,406247,375173,182150,54000,15000,73086,27214
+AZ,515910,828669,362642,601943,1804762,1523681,862573,44000,11000,63616,10077
+AR,201321,345409,165883,306398,750505,788485,444554,64000,19000,73664,20292
+CA,132092,215265,99638,186657,457177,451756,240847,49000,12000,65739,22400
+CO,358471,606802,289371,507289,1416063,1391878,650519,54000,19000,55508,37969
+CT,211637,403658,196918,325110,916955,968967,478007,54000,17000,68594,19367
+DE,740521,1250460,557860,919876,2846985,2389018,981024,64000,19000,61854,11834
+DC,36352,50439,25225,75569,193557,140043,70648,64000,19000,57599,19364
+                    </code></pre>
+                </div>
+            </div>
+
+            <!-- 개발자 코딩 제공 부분 -->
+            <h3>개발자 코딩 제공 부분</h3>
+            <p>홈, 도움말는 <strong>개발자가 씨투아이 API등을 활용하여 임의로 코딩</strong>하여 제공한 UI 입니다.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 col-md-12">
+            <div id="c2iLegend01Float" class="c2iLegend c2iNoSelect c2iLegendFloat"></div>
+            <div id="c2iPC01" class="c2iPC c2iNoSelect"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-12">
+            <pre id="c2iGrid01" class="gridArea c2iHidden"></pre>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 col-md-6">
+            <div id="c2iLegend01" class="c2iLegend" style="display:inline-block"></div>
+        </div>
+        <div class="col-sm-6 col-md-6">
+            <div id="c2iLegend03" class="c2iLegend"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 col-md-6">
+            <div id="c2iPC02" class="c2iPC c2iNoSelect"></div>
+        </div>
+        <div class="col-sm-6 col-md-6">
+            <div id="c2iPC03" class="c2iPC c2iNoSelect"></div>
+        </div>
+    </div>
+</div>
+
+<!-- 자동 툴팁 사용시 name, measure는 필수 존재 내역입니다.
+     Custom Tooltip은 별도 ID로 만들어 사용자가 임의로 프로그램 가능합니다. -->
+<div id="tooltip" class="c2iTooltip c2iHidden">
+    <table style="width:300px">
+        <thead>
+        <tr>
+            <th colspan='4' class="tipHeader">
+                <div class="c2iCloseBtn" title="닫기">X</div>
+                <p><strong><span id="name">판매본부</span></strong></p>
+                <p id="measure" style="font-size: 14px; color:yellow">1,200</p>
+                <hr style="margin:2px 0px; opacity: 0.5;"> <!-- ratio가 있거나 hr 태그가 존재해야 합니다 -->
+                <p id="ratio"></p>
+                <!--<p><span id="testId" style="font-size: 12px; color: orange;">사용자 임의 툴팁 적용시,<br> 제공 데이터로 재구성 가능.</span></p>-->
+            </th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<script>
+    /*
+    대.소문자는 반드시 준수해야 합니다.
+    옵션이 없거나(미정의) '' 이면, 필수요소는 기본값 자동 적용되며 불필요한 옵션은 자동으로 적용되지 않습니다.
+    *** 공통 정보
+       -. isResponsive: true, false (기본값: false)
+       -. width (단위: %, px) : % -> 상위 컨테이너 대비, px -> 절대 사이즈인 경우.(미 설정시 상위의 100% 설정)
+       -. aspectRatio : 4:3 (= 1.333), 16:9 (= 1.777) 기본값, 또는 width 대비 % 설정 가능
+       -. height (단위: px) : aspectRatio 없이 height 설정하면 적용 가능.(비 반응형시 추천)
+       -. theme : #efefef, #444363, #333333 (제거: none), linear-gradient(to right, #02111d, #037bb5, #02111d)
+       -. lang : 언어 설정(기본값:'kr')
+       -. margin : x,y축이 설정 및 점유하는 영역.(기본값 margin : {top: 30, left: 30, right: 30, bottom: 30, isDynamic: true})
+                   top ~ bottom: 기본값 -> 30, 차트의 내역(실제 막대, 라인 등)이 그려질 영역 설정용도
+       -. easing : 애니메이션시 적용될 기본 알고리즘 (linear, elastic, exp, bounce, quad, cubic, sin, circle, back)
+       -. duration: 50~1500 ms(기본값 750)
+
+       -. data : 씨투아이에 주입될 데이터 객체로서 직접 주입해도 되며, 다른 옵션 처럼 추후 주입해도 됩니다.
+
+       -. title : 컨포넌트의 제목을 표시하기 위한 장소이며, 특히 데이터 정렬을 적용하는 차트(표준, 피라미드, 파이 등)에서는
+                   정렬 상태를 부 제목을 통해 제공합니다.
+                   .caption: 제목 명칭
+                   .fonts:제목 폰트 (기본값:['helvetica','20px','#434343'])
+                   .textDeco: underline/line-through/overline
+                   .gap: x, y 의 여유 공간 조정용도
+                   .xPos:start, middle, end, yPos: top,middle, bottom,
+                   .subCaption: 주 제목 명칭, subFonts, opacity:1,
+                   .desc: 제목 툴팁
+
+       -. isDev : 개발 모드 여부.
+              .true: 실행시 로그 정보 표시
+
+    *** foreground
+       -. keyColNm : key 컬럼명
+       -. labelColor: labelColor 설정 색상으로 모두 적용되며, 없으면 measure color 에 따름.
+       -. color : 2D 색상 -> 10, 20, 20b, 20c & ['green','red',...]
+       -. fonts: x축의 tick 값 표시하기 위한 폰트 (기본값 : ['helvetica','11px','gray'])
+       -. tickFonts: x축의 tick 값 표시하기 위한 폰트 (기본값 : ["helvetica", "11px", "dimgray", "8px"])
+                     4번째 크기 ; 키명 문자적용, 2번째 크기 ; 키명 이외 틱 값 적용
+       -. strokeWidth : 선 두께.
+       -. opacity : 선 불투명도.
+       -. interpolate: linear (기본값), basis, monotone, step, cardinal, ''
+       -. xLabel : x축 레이블 표시 방법.(pos: 'top', rotate:0, isVertical: false, dy: -20)
+                  (rotate : -90 ~ 90 권장(기본값 : 없음),  dy: -20)
+       -. ticks : x축의 표시할 값의 갯수 (기본값 : 5)
+       -. brush : 해당 항목의 값을 필터링 하기 위한 기능.(fonts:['helvetica','10px','red'], color: ['#ff4412', '#f94943'], width: 16)
+                .fonts: 적용 폰트(필수 적용 요망)
+                .endFn: 브러시 영역 설정 끝날 경우 적용될 함수.(즉, brushEnd 시 적용됩니다)
+
+    *** background : non-selected line 색상 및 불투명도.(draw: true, color: 'gray', opacity: 0.5)
+       -. color : 단일 색상
+       -. opacity : 선 불투명도.
+       -. draw : 배경 선을 그리지 않음
+
+    *** Summary
+         -. pos : 현재 버전은 'bottom'만 지원.
+         -. type : sum, avg, count, min, max
+         -. fonts :['helvetica','12px','#ff0']
+         -. resultColor: 첫번째 색상 -> 100% 이하, 두번째 색상 -> 100% 이상. ['orange','steelblue']
+         -. dy : 명칭을 표시하기 위한 간격 조정 용도(기본값, dy : 0)
+         -. isShow : 요약 정보 보이기
+
+    *** grid
+         -. id : 간단한 테이블 모방 정보(반드시 # 필요, 예: #c2iGrid01).
+         -. draw : 데이터 필터링 또는 최초에 보이기
+         -. rowsPerPage :보여주기 위한 데이터 갯수
+
+    *** Measures
+       -. caption : 항목(measure) 제목명
+       -. colNm : 컬럼명
+       -. scale : log, sqrt, linear, ordinal
+       -. format : 정수(,d), 실수(,f 또는 ,.2f), 백분율(% .2%)
+       -. formatAvg : 산술평균 적용 용도.
+       -. color : 항목 레이블명 적용 색상
+       -. sort : ordinal scale만 적용됩니다. (asc, desc, '')
+       -. axisPos: y축 위치.(left, right)
+       -. draw : 초기 로드시 표시 여부
+
+    *** Legend
+      -. legend : y,y2 항목(measure)표출 정보
+          .id: 범례 컨테이너 id ('#'을 붙이세요)
+          .fonts: 항목 명칭 폰트 (기본값: ["helvetica", "12px"])
+          .padding: 간격 정보 (기본값: '10px 10px 10px 10px')
+          .backColor: 백그라운드 색상 (기본값: 없음)
+          .labelGap: 명칭과 체크 박스의 간격 (기본값: '5px')
+          .itemGap: 개별 항목간의 간격 (기본값: '10px')
+
+    *** method
+       -. click, mouseenter, mouseleave, mousemove
+           이름과 같은 이벤트 이며, 동 함수들은 여러 곳에서 발생합니다.
+           또한 개발자는 전달되는 파라메터인 발생 소스(fromSource)와 데이터를 확인하여 추가적인 알고리즘을 처리합니다.
+    */
+    var c2iOption = {
+        isResponsive:true, width:'100%', aspectRatio: '30%', theme: 'linear-gradient(to bottom, #02111d, #027bb5, #02111d)', // #444363 lang: 'jp',
+        margin: {top:90, left:10, right:10, bottom:65},
+        easing:'elastic', duration:750,
+
+        data: undefined,
+
+        title: {
+            caption:"미국 주별 인구 및 소득,세금 분석", fonts:['맑은 고딕','20px','white'],textDeco:"underline", gap: 5, xPos:'middle', yPos:'top',
+            subCaption:"('2016년 통계 기준)", subFonts: ['맑은 고딕','12px','#777','#CFDD3F'], opacity:1,
+            desc:"데모용으로 작성된 차트"
+        },
+
+        // labelColor 색상 존재시 동일 색상, 없으면 measure color 에 따름.
+        foreground: { keyColNm:'State', labelColor:'', color:'10', // color: 10, 20, 20b, 20c, ['green','red',...] each 사용 금지
+            fonts: ['맑은 고딕','12px','#eee'], tickFonts: ['맑은 고딕','11px','#eee', "8px"], strokeWidth: 1, opacity:0.9,
+            interpolate: 'monotone', xLabel: { rotate: -25, dy: -20 }, ticks: 6,
+            brush: { fonts:['맑은 고딕','10px','orange'], color: ['#ff4412', '#a5a5a5'], width: 18, endFn: undefined} // brushEndFn
+        },
+        // non-selected line 색상 및 불투명도
+        background: { color: 'gray', opacity:0.3, draw: true },
+
+        // resultColor : 점유율 100% 이하 및 이상 적용 색상
+        // type : sum, avg, count, min, max,
+        summary: {pos: 'bottom', type:'sum', fonts:['맑은 고딕','12px','#ff0'],
+            resultColor: ['orange','steelblue'], dy: 15, isShow: true},
+        grid: { id:'#c2iGrid01', draw: true, rowsPerPage: 'all' }, // all, 25, 50, 100
+
+        measures:[ // scale: log, sqrt, linear, ordinal  // sort: 'asc'/'desc'/''
+            { caption: '지역명', colNm: 'State', scale: 'ordinal', format: '', formatAvg:'', color:'#58ABC5', sort: '', axisPos:'left', draw: true },
+            { caption: '5세미만', colNm: '_5세미만', scale: 'linear', format: ',f', formatAvg:',f', color:'#98ABC5', sort: 'asc', axisPos:'left', draw: false },
+            { caption: '5~13세', colNm: '_5_13세', scale: 'linear', format: ',f', formatAvg:',f', color:'#8a89a6', sort: 'asc', axisPos:'left', draw: false },
+            { caption: '14~17세', colNm: '_14_17세', scale: 'linear', format: ',f', formatAvg:',f', color:'#7b6888', sort: 'asc', axisPos:'left', draw: false },
+            { caption: '18~24세', colNm: '_18_24세', scale: 'linear', format: ',f', formatAvg:',f', color:'#6b486b', sort: 'asc', axisPos:'left', draw: false },
+            { caption: '25~44세', colNm: '_25_44세', scale: 'linear', format: ',f', formatAvg:',f', color:'#a05d56', sort: 'asc', axisPos:'left', draw: false },
+            { caption: '45~64세', colNm: '_45_64세', scale: 'linear', format: ',f', formatAvg:',f', color:'#d0743c', sort: 'asc', axisPos:'left', draw: true },
+            { caption: '65세 이상', colNm: '_65세이상', scale: 'log', format: ',f', formatAvg:',f', color:'#ff8c00', sort: 'asc', axisPos:'left', draw: true },
+            { caption: '소득총액', colNm: 'IncomeAvg', scale: 'log', format: ',f', formatAvg:',f', color:'green', sort: 'asc', axisPos:'right', draw: true },
+            { caption: '세금총액', colNm: 'TaxAvg', scale: 'linear', format: ',f', formatAvg:',f', color:'purple', sort: 'asc', axisPos:'left', draw: false },
+            { caption: '지역총생산/인', colNm: 'GRDP', scale: 'sqrt', format: ',f', formatAvg:',f', color:'#36ff43', sort: 'asc', axisPos:'right', draw: true },
+            { caption: '민간소비/인', colNm: 'spentPer', scale: 'linear', format: ',f', formatAvg:',f', color:'#903274', sort: 'asc', axisPos:'left', draw: true }
+        ],
+
+        // legend: {id: '#c2iLegend01', fonts:['맑은 고딕','12px'], padding: '5px 10px', backColor:'#333333',
+        //     labelGap: '4px', itemGap: '8px', yNy2Gap: '25px'},
+        method:{click:getClickInfo, mouseenter:getMouseEnterInfo, mouseleave:getMouseLeaveInfo, mousemove: getMouseMoveInfo},
+        isDev:false
+    };
+
+    var c2iChart = c2i.chart.pCoord('#c2iPC01', c2iOption);
+
+    // 2nd 컴포넌트
+    var c2iOption2 = c2i.util.deepClone(c2iOption);
+    c2iOption2.aspectRatio = '35%';
+    c2iOption2.theme = '#333333';
+    c2iOption2.easing = 'sinusoidal';
+
+    c2iOption2.title.caption = "시도별 인구 및 소득,세금 분석";
+    c2iOption2.title.fonts = ['맑은 고딕','14px','yellow'];
+    c2iOption2.title.subFonts = ['맑은 고딕','12px','#77b937','red'];
+    c2iOption2.margin = {top:80, left:25, right:25, bottom:65};
+    c2iOption2.foreground.tickFonts = ['맑은 고딕','11px','#ffc419', "10px"];
+    c2iOption2.foreground.brush.fonts = ['맑은 고딕','11px','steelblue'];
+    c2iOption2.foreground.brush.color = ['#2fc3c3', '#ffc419'];
+    c2iOption2.foreground.xLabel.rotate = 0;
+    c2iOption2.foreground.interpolate = 'linear';
+    c2iOption2.foreground.labelColor = '#bbb'; // 항목명, y축 라인 & 틱 : 단일 색상 적용
+    c2iOption2.summary.type = 'avg';
+    c2iOption2.resultColor = ['red','blue'];
+    c2iOption2.grid.id = '#c2iGrid02';
+    c2iOption2.legend = {id: '#c2iLegend01', fonts:['맑은 고딕','12px'], padding: '5px 10px', backColor:'#333333',
+        labelGap: '4px', itemGap: '8px', yNy2Gap: '25px'};
+    var c2iChart2 = c2i.chart.pCoord('#c2iPC02', c2iOption2);
+
+    // 3rd 컴포넌트
+    var c2iOption3 = c2i.util.deepClone(c2iOption);
+    c2iOption3.aspectRatio = '35%';
+    c2iOption3.theme = 'linear-gradient(to right, #02111d, #027bb5, #02111d)';
+    c2iOption3.easing = 'back';
+
+    c2iOption3.title.caption = "벤더별 차동차 성능 분석";
+    c2iOption3.title.fonts = ['맑은 고딕','14px','yellow'];
+    c2iOption3.title.subFonts = ['맑은 고딕','12px','#dd9a19','red'];
+    c2iOption3.foreground.keyColNm = 'name';
+    c2iOption3.foreground.brush.color = ['#d3d3d3', '#ffffff'];
+    c2iOption3.foreground.xLabel.rotate = 0;
+    c2iOption3.foreground.interpolate = 'linear';
+    c2iOption3.margin = {top:80, left:90, right:10, bottom:65};
+    c2iOption3.summary.type = 'max';
+    delete c2iOption3.grid;
+    c2iOption3.legend = {id: '#c2iLegend03', fonts:['맑은 고딕','12px'], padding: '5px 10px', backColor:'#333333',
+        labelGap: '4px', itemGap: '8px', yNy2Gap: '25px'};
+    c2iOption3.measures = [ // scale: log, sqrt, linear, ordinal  // sort: 'asc'/'desc'/''
+        { caption: '차종명', colNm: 'name', scale: 'ordinal', format: '', color:'#58ABC5', sort: '', draw: true },
+        // { caption: '기업명', colNm: 'group', scale: 'ordinal', format: '', color:'#58ABC5', sort: '', draw: true },
+        { caption: '연비', colNm: 'economy_mpg', scale: 'linear', format: ',.1f', color:'#98ABC5', sort: 'asc', draw: false },
+        { caption: '실린더', colNm: 'cylinders', scale: 'linear', format: ',f', color:'#98ABC5', sort: 'asc', draw: false },
+        { caption: '변위 (cc)', colNm: 'displacement_cc', scale: 'log', format: ',f', color:'#8a89a6', sort: 'asc', draw: true },
+        { caption: '파워 (마력)', colNm: 'power_hp', scale: 'sqrt', format: ',f', color:'#7b6888', sort: 'asc', draw: true },
+        { caption: '증량 (lb)', colNm: 'weight_lb', scale: 'log', format: ',f', color:'#6b486b', sort: 'asc', draw: false },
+        { caption: '0-60 mph(s)', colNm: '0-60_mph_s', scale: 'linear', format: ',.1f', color:'#a05d56', sort: 'asc', draw: false },
+        { caption: '생산년도', colNm: 'year', scale: 'ordinal', format: '', color:'#d0743c', sort: 'asc', draw: true }
+    ];
+    var c2iChart3 = c2i.chart.pCoord('#c2iPC03', c2iOption3);
+
+    ///////////////////
+    function getClickInfo(fromSource, data){
+        console.log(fromSource.container + ',' + fromSource.selector + ',' + fromSource.key + ' click ');
+        for(var attr in data){
+            console.log(attr + ' : ' + data[attr]);
+        }
+        console.log('keys ', { alter: d3.event.altKey, control: d3.event.ctrlKey, shift: d3.event.shiftKey, meta: d3.event.metaKey })
+    }
+    function getMouseEnterInfo(fromSource, data){
+        console.log(fromSource.container + ',' + fromSource.selector + ' getMouseEnterInfo');
+    }
+    function getMouseLeaveInfo(fromSource, data){
+        console.log(fromSource.container + ',' + fromSource.selector + ' getMouseLeaveInfo')
+    }
+    function getMouseMoveInfo(fromSource, data){
+        console.log(fromSource.container + ',' + fromSource.selector + ' getMouseMoveInfo');
+        document.getElementById('name').innerHTML = '주어진 데이터를 기반으로';
+        document.getElementById('measure').innerHTML = '코딩 확장 구현 하세요..!';
+    }
+    function brushEndFn(data) {
+        data.forEach(function(datum) {
+            for(var attr in datum){
+                console.log(attr + ' : ' + datum[attr]);
+            }
+        });
+    }
+    /*
+     대.소문자는 반드시 준수해야 합니다.
+     옵션이 없거나(미정의) '' 이면, 필수요소는 기본값 자동 적용되며 불필요한 옵션은 자동으로 적용되지 않습니다.
+     *** 공통 정보
+     -.width, height : 범례 전체 영역.
+     -.layout  : ['topbottom', 1] 또는 ['leftright', 1] (기본값)
+                 두번째 인자: 각 행 또는 열의 범례 갯수.
+     -.padding : 범례 아이템간 간격.(기본값 5)
+
+     -.rectSize : 범례 사각형 정보.(색상 정보는 관련 차트의 객체정보를 계승함)
+     -.labelGap : 'topbottom'인 경우, 상위 범례 아이템간의 간격(단위 em).
+                  'leftright'인 경우, 좌측 범례 아이템 기준
+     -.labelDistance : 범례 도형과 레이블 명칭과의 간격.
+     -.valueDistance : 범례 값을 표시할 경우 레이블 명칭과의 간격.
+     -.targetChartObject : 대상 차트 객체 변수명.
+     -.isReadOnly : true인 경우 클릭시 반응하지 않음.(기본 범례와 동시 사용시 필요)
+     */
+    /* ======================================================================== */
+    var legendOptions = { // #444363
+        width: 660, height: 45, layout: ['topbottom', 7], padding: 6, theme:'none', // lang: 'jp',
+        duration: 300, delay: 20,
+        rectSize: { width: 16, height: 16, radius: 8, strokeWidth: 0},
+        labelGap : 1.15/* em */, labelDistance: 8, valueDistance: 120,/* 120px */
+        fonts:['맑은 고딕','12px','orange'],
+        targetChartObject: c2iChart,
+        isReadOnly: false
+    };
+
+    var c2iLg;
+    d3.csv("assets/data/dumbo//state_population_long.csv", function(error, data) {
+        c2iChart.data(data).render();
+        c2iLg = c2i.ui.legendOrdinal('#c2iLegend01Float', legendOptions).render();
+    });
+
+    d3.csv("assets/data/dumbo//state_population_mid.csv", function(error, data) {
+        c2iChart2.data(data).render();
+    });
+
+    d3.csv("assets/data/dumbo//cars2.csv", function(error, data) {
+        c2iChart3.data(data).render();
+    });
+
+</script>
+<script>
+    d3.select('#save').on('click', exportImage).on('touchstart', exportImage);
+    function exportImage(){
+        c2i.util.exportImage(['#c2iPC01','#c2iPC02','#c2iPC03']);
+        c2iChart.exportData(); // 'text'(default),'xls' / ''(default),'all'
+        c2iChart2.exportData();
+        c2iChart3.exportData();
+    }
+
+    d3.select('#c2iGridTest').on('click', c2iGridTest);
+    function c2iGridTest() {
+        d3.select('#c2iGrid01').classed('c2iHidden', !d3.select('#c2iGrid01').classed('c2iHidden'));
+    }
+    d3.select('#c2iGuide').on('click', c2iGuide);
+    d3.select('#c2iGuideClose').on('click', c2iGuideClose);
+
+    function c2iGuide() {
+        d3.select('#c2iGuideInfo').classed('c2iHidden', !d3.select('#c2iGuideInfo').classed('c2iHidden'));
+    }
+    function c2iGuideClose() {
+        d3.select('#c2iGuideInfo').classed('c2iHidden', true);
+    }
+</script>
+</body>
+</html>

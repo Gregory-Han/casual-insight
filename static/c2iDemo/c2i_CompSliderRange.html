@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>범위 슬라이더(수평) for C2I</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+    <script src="assets/lib/d3.min.js" charset="utf-8"></script>
+    <script src="assets/lib/three.min.js"></script>
+
+    <script src="assets/js/c2i.v2.min.js"></script>
+
+    <script src="assets/i18n/c2i_kr.js"></script>
+    <!-- 다국어 사용시 아래 스크립트 필요합니다. (사용하지 않으면 제거) -->
+    <!--<script src="../assets/i18n/c2i_en.js"></script>-->
+    <!--<script src="../assets/i18n/c2i_jp.js"></script>-->
+    <!--<script src="../assets/i18n/c2i_ch.js"></script>-->
+
+    <!-- 정품 인증번호 발급 및 적용시 아래 스크립트 필요합니다. -->
+    <!--<script src="../assets/c2iLicenseKey.js"></script>-->
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/c2i.v2.min.css">
+    <link rel="stylesheet" href="assets/css/demo.css">
+    <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+    <style>
+        body {
+            background-color: #484848;
+        }
+        label{
+            color: #919191;
+        }
+        p{
+            color: #c3c3c3;
+        }
+        select{
+            width: 120px;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row" style="margin: 5px 0;">
+        <div class="col-md-1">
+            <a href="index.html#c2iDemo" style="color: white"><div class="btn btn-primary btn-sm btn-group-justified">홈</div></a>
+        </div>
+        <div class="col-md-1">
+            <div id="c2iGuide" class="btn btn-primary btn-sm btn-group-justified">도움말</div>
+        </div>
+        <div class="col-md-3">
+            <div id="create" class="btn btn-success btn-sm btn-group-justified">생성</div>
+        </div>
+        <div class="col-md-3">
+            <div id="clear" class="btn btn-danger btn-sm btn-group-justified">제거</div>
+        </div>
+        <div class="col-md-3">
+            <div id="save" class="btn btn-warning btn-sm btn-group-justified">익스포트</div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3 style="text-align: center; color: #ddd">씨투아이는 적용형 & 반응형이 기본입니다. 화면크기를 조절해 보세요.</h3>
+        </div>
+    </div>
+
+    <div id="c2iGuideInfo" class="c2iHidden c2iGuideInfo">
+        <div class="container">
+            <button id="c2iGuideClose" class="btn btn-primary btn-sm float my-float">닫기</button>
+            <div class="page-header">
+                <h1 class="text-primary">씨투아이 슬라이더 컴포넌트</h1>
+                <p>선형(숫자), Ordinal(문자기반), 일자(년,년월,년월일 등) 기반 슬라이더 제공.</p>
+                <p>씨투아이는 적용형 & 반응형이 기본입니다. 화면크기를 조절해 보세요.</p>
+            </div>
+
+            <!-- 데모 따라하기-->
+            <h3>데모 따라하기</h3>
+            <div class="row">
+                <div class="col-md-12">0.범위 시작 및 끝 부분 드래그시 상호간 역할 바뀌면서 자동 실행됩니다.</div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">&nbsp;&nbsp; 예: 애니메이션 시간에 따라 동작 속도 상이.</div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">&nbsp;&nbsp; 아무곳이나 클릭시 최소 단위 설정할지 고민 중입니다. 그 이유는 미 선정시 전체 개념으로 사용 가능합니다.</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">1.드래그(클릭)시 이벤트 발생 기능</div>
+                <div class="col-md-8">드래그 종료시 이벤트 발생.(두 가지 동시 지원 가능)</div>
+            </div>
+
+            <!-- 데이터 구조-->
+            <h3>데이터 구조: 문자 배열, 숫자 범위 배열</h3>
+            <div class="row">
+                <div class="col-md-2">0.문자 배열</div>
+                <div class="col-md-9">
+                    <pre><code>
+    var data = ['서울','인천','대전','대구','세종','경기'];
+    c2i.ui.slider('#c2iSlider', options).data(data)render();
+                    </code></pre>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">1.숫자 범위 배열</div>
+                <div class="col-md-9">
+                    <pre><code>
+    var data = [0.9, 2.5];
+    c2i.ui.slider('#c2iSlider', options).data(data)render();
+                    </code></pre>
+                </div>
+            </div>
+
+            <!-- 개발자 코딩 제공 부분 -->
+            <h3>개발자 코딩 제공 부분</h3>
+            <p>홈, 도움말, 생성,제거는 <strong>개발자가 씨투아이 API등을 활용하여 임의로 코딩</strong>하여 제공한 UI 입니다.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <label for="currentArea1" >지역-1
+                <select id='currentArea1'></select>
+            </label>
+            &nbsp - &nbsp
+            <label for="currentArea2" > 지역-2
+                <select id='currentArea2'></select>
+            </label>
+        </div>
+        <div class="col-md-3">
+            <p id="areaName1" style="display: inline">?</p>
+            <p id="areaName3" style="display: inline">?</p>
+        </div>
+        <div class="col-md-6">
+            <p id="areaName2" style="display: inline">?</p>
+            <p id="areaName4" style="display: inline">?</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div id="c2iOrdinal01" class="c2iSlider c2iNoSelect"></div>
+        </div>
+        <div class="col-md-6">
+            <div id="c2iOrdinal02" class="c2iSlider c2iNoSelect"></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label for="c2iLinear01Select1" >달성률-1
+                <select id='c2iLinear01Select1'></select>
+            </label>
+            &nbsp - &nbsp
+            <label for="c2iLinear01Select2" >달성률-2
+                <select id='c2iLinear01Select2'></select>
+            </label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-5">
+            <div id="c2iLinear01" class="c2iSlider c2iNoSelect"></div>
+        </div>
+        <div class="col-md-1">
+            <div>
+                <img id="myPic" src="assets/img/Han.jpg" width="50px" alt="">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div id="c2iLinear02" class="c2iSlider c2iNoSelect"></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-offset-1 col-md-3">
+            <p id="date1">?</p>
+        </div>
+        <div class="col-md-4">
+            <p id="date2">?</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div id="c2iTime01" class="c2iSlider c2iNoSelect"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div id="c2iTime02" class="c2iSlider c2iNoSelect"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <label for="c2iTime03Select1" >일자-1
+                <select id='c2iTime03Select1'></select>
+            </label>
+            &nbsp - &nbsp
+            <label for="c2iTime03Select2" >일자-2
+                <select id='c2iTime03Select2'></select>
+            </label>
+        </div>
+        <div class="col-md-6">
+            <div class="col-md-4">
+                <p id="date3">?</p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div id="c2iTime03" class="c2iSlider c2iNoSelect"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    /*
+     대.소문자는 반드시 준수해야 합니다.
+     옵션이 없거나(미정의) '' 이면, 필수요소는 기본값 자동 적용되며 불필요한 옵션은 자동으로 적용되지 않습니다.
+     *** 공통 정보
+         -. isResponsive: true, false (기본값: false)
+         -. width (단위: %, px) : % -> 상위 컨테이너 대비, px -> 절대 사이즈인 경우.(미 설정시 상위의 100% 설정)
+         -. aspectRatio : 4:3 (= 1.333), 16:9 (= 1.777) 기본값, 또는 width 대비 % 설정 가능
+         -. height (단위: px) : aspectRatio 없이 height 설정하면 적용 가능.(비 반응형시 추천)
+         -. theme : #efefef, #444363, #333333 (제거: none), linear-gradient(to right, #02111d, #037bb5, #02111d)
+         -. lang : 언어 설정(기본값:'kr')
+         -. margin : x,y축이 설정 및 점유하는 영역.
+                     기본값 margin
+                       .Horizontal인 경우 {top: 0, left: 50, right: 50, bottom: 10} 참고
+                       .Vertical인 경우 {top: 50, left: 50, right: 50, bottom: 10} 참고
+         -. easing : 애니메이션시 적용될 기본 알고리즘(linear: 기본값, elastic, exp, bounce..)
+         -. duration: 50~1500 ms(기본값 500)
+
+         -. data : 씨투아이에 주입될 데이터 객체로서 직접 주입해도 되며, 다른 옵션 처럼 추후 주입해도 됩니다.
+                .년월일의 경우: 시간은 항상 00:00:00로 설정해서 주입해야 합니다. 그렇지 않으면 시간만큼 오차 발생.
+         -. currentValues : 현재 값 정보.(없으면 첫 번째 값)
+                           .년도만 사용할 경우: 월일은 항상 1월1일로 설정해야 합니다. 그렇지 않으면 월일만큼 오차 발생. 또는 ordinal 처리 권장
+                           .년월의 경우: 일자는 항상 1일로 설정, 그렇지 않으면 일자만큼 오차 발생.
+                           .년월일의 경우: 시간은 항상 00:00:00로 설정해야 합니다. 그렇지 않으면 시간만큼 오차 발생.
+         -. sort: asc, desc, '' (scale이 ordinal인 경우만 적용)
+         -. isRange: 범위 슬라이더 여부.
+                     이때 currentValues는 배열도 가능하며, 순서 없이 입력해도 내부에서 정렬하여 처리합니다.
+
+         -. targetChart: c2i targetChart 존재시 targetChart 데이터 & colNm 설정
+         -. colNm : c2i targetChart 존재시 해당 컬럼 설정
+         -. scale : ordinal, linear, time
+            .ordinal : 부서명, 지역명, 성명 등의 데이터 종류
+            .linear : 자연수, 정수, 실수 등의 데이터 종류
+            .time : 년도,년월,년월일 등의 데이터 종류.
+                .년도의 경우 월일은 항상 1월1일로 설정해야 합니다. 그렇지 않으면 월일만큼 오차 발생. 또는 ordinal 처리 권장
+                .년월의 경우 일자는 항상 1일로 설정해야 합니다. 그렇지 않으면 일자만큼 오차 발생.
+                .년월일의 경우 시간은 항상 00:00:00로 설정해야 합니다. 그렇지 않으면 시간만큼 오차 발생.
+         -. format: 슬라이더 축 tick 값 포멧.(ordinal은 무시)
+                ('%y.%m.%d': 18.10.22, '%Y.%m.%d': 2018.10.22, '.0%': 90.5%, ',f': 실수, ',d': 정수)
+         -. fonts : 슬라이더 축 tick 값 표시 폰트 (기본값 : ["helvetica", "11px", "dimgray"])
+
+         -. caption : 슬라이더 제목명
+         -. captionFonts : 슬라이더 제목 표시 폰트 (기본값 : ["helvetica", "16px", "dimgray"])
+         -. posXY : 슬라이더 제목 위치 ['middle','top']
+         -. dx, dy: 슬라이더 제목 위치 세부 조정용도
+
+         -. isDev : 개발 모드 여부.
+                .true: 실행시 로그 정보 표시
+
+     *** axis
+         -. type : 슬라이더 유형.(Horizontal, Vertical) (기본값 : Horizontal)
+         -. axisPos : 슬라이더 축 대비 tick 값 위치 top/bottom, left/right (기본값 : bottom)
+         -. ticks : 슬라이더 축의 표시할 값의 갯수 (기본값 : 10)
+         -. tickPad : ordinal인 경우 슬라이더 축의 처음, 끝의 여유 공간비율 (기본값 : 0)
+         -. tickSize : 슬라이더 축의 tick 크기 (기본값 : 6)
+         -. stroke: 슬라이더 축의 색상(기본값 : dimgray)
+         -. strokeWidth: 슬라이더 축의 두께 (기본값 : 1px)
+
+         -. xLabel : 슬라이더 축 레이블 표시 방법
+                    (isVertical : 한글 세로 표시(기본 false), rotate : -90 ~ 90 권장(기본값 : 없음), dy: -5)
+         -. indicator: 초기 또는 현재 값 지시자 설정.
+                { width: 5, height: 26, rx:0, ry: 0, opacity: 0.7, color:'orange' }
+         -. indicatorLabel: 초기 또는 현재 값 지시자 명칭 표시 설정.
+                { fonts:['맑은 고딕','16px','#fe0029'], prefix:'여긴 ', suffix:' 실적', dx:0, dy:50}
+
+     *** method
+         -. move, moveEnd
+             마우스 또는 지시자 이동시 발생합니다.
+             또한 개발자는 전달되는 파라메터의 발생 소스(fromSource)와 데이터를 확인하여 추가적인 알고리즘을 처리합니다.
+     */
+    function moveInfo(fromSource, data){
+        console.log(fromSource.container + ',' + fromSource.selector + ' moveInfo ');
+
+        ///////  개발자 코드  //////
+        if (fromSource.container.indexOf('c2iOrdinal01') > -1) {
+            document.querySelector('#areaName1').innerHTML = data.position.length ? data.position : '?';
+        }
+        if (fromSource.container.indexOf('c2iLinear01') > -1) {
+            var info = d3.format(c2iOption3.format)(data.position[0]) + ' ~ ' + d3.format(c2iOption3.format)(data.position[1]);
+            document.querySelector('#areaName3').innerHTML = info;
+            d3.select('#myPic')
+                .style('width', parseInt(data.position[0]/2*100) + 'px')
+                .style('height', parseInt(data.position[1]/2*100) + 'px');
+        }
+        if (fromSource.container.indexOf('c2iTime02') > -1) {
+            var info = d3.time.format(c2iOption6.format)(data.position[0]) + ' ~ ' + d3.time.format(c2iOption6.format)(data.position[1]);
+            document.querySelector('#date2').innerHTML = info;
+        }
+        if (fromSource.container.indexOf('c2iTime03') > -1) {
+            var info = d3.time.format(c2iOption7.format)(data.position[0]) + ' ~ ' + d3.time.format(c2iOption7.format)(data.position[1]);
+            document.querySelector('#date3').innerHTML = info;
+        }
+    }
+
+    function moveEndInfo(fromSource, data){
+        console.log(fromSource.container + ',' + fromSource.selector + ' moveEndInfo ');
+        ///////  개발자 코드  //////
+        if (fromSource.container.indexOf('c2iOrdinal02') > -1) {
+            document.querySelector('#areaName2').innerHTML = data.position.length ? data.position : '?';
+        }
+        if (fromSource.container.indexOf('c2iLinear02') > -1) {
+            document.querySelector('#areaName4').innerHTML = data.position;
+        }
+        if (fromSource.container.indexOf('c2iTime01') > -1) {
+            var info = d3.time.format(c2iOption5.format)(data.position[0]) + ' ~ ' + d3.time.format(c2iOption5.format)(data.position[1]);
+            document.querySelector('#date1').innerHTML = info;
+        }
+    }
+    ///////////////////
+    var c2iOption = {
+        isResponsive: true, width: '100%', height: '125px', theme: 'linear-gradient(to right, rgb(29, 67, 80), rgb(164, 57, 49))',
+        margin : {top: 20, left: 50, right: 50, bottom: 0},
+        easing:'back', duration : 1200,
+        data : undefined, // targetChart 없을 경우 String 배열 주입 후 진행.
+        step: '', // 문자: '', 숫자: .2
+        currentValues: ['대전', '경기'],
+        sort:'', // asc, desc, '' (scale이 ordinal인 경우만 적용됩니다)
+        isRange: true, // 범위 슬라이더 여부
+
+        // axisPos:top/bottom,
+        // ticks : ordinal은 무시, time & linear는 0 인 경우 모든 데이터 표시
+        // xPad : ordinal인 경우 처음, 끝의 여유 공간율
+        axis: { type:'Horizontal', axisPos:'top', ticks:5, tickPad: 10, tickSize: 6, xPad:0.5, stroke:'dimgray', strokeWidth: '3px',
+            xLabel: { rotate: 0, isVertical: false, dy: -5}},
+        // stroke: range stroke
+        indicator: { width: 5, height: 26, rx:0, ry: 0, opacity: 0.7, color: ['orange','#fff'], stroke:'#eee' },
+        indicatorLabel: { fonts:['맑은 고딕','16px','#fe0029'], prefix:'여긴 ', suffix:' 실적', dx:0, dy:40}, //dy: -10, 40
+
+        targetChart: undefined, // targetChart 존재시 targetChart 데이터 & colNm 체크 및 상위 data 주입
+        // scale : time, ordinal, linear 택일
+        colNm: '', scale: 'ordinal', format:'', fonts:['helvetica','12px','#209f05'],
+        caption:'지역명 (Top)', captionFonts:['맑은 고딕','16px','#f4ee09'], posXY: ['middle','top'], dx:0, dy:5,
+        method:{move:moveInfo}, // , moveEnd: moveEndInfo
+        isDev: false
+    };
+
+    var data = ['서울','인천','대전','대구','세종','경기','강원','충북','충남','경남','경북','전북','전남'];
+
+    var c2iOrdinal1 = c2i.ui.slider('#c2iOrdinal01', c2iOption).data(data).render();
+    var op2 = c2i.util.deepClone(c2iOption);
+    op2.theme = 'linear-gradient(to bottom, rgb(29, 67, 80), rgb(164, 57, 49))';
+    op2.caption = '지역명 내림차순(Bottom)';
+    op2.margin.top = 10;
+    op2.easing = 'bounce';
+    op2.duration = 2000;
+    op2.sort = 'desc';
+    op2.axis.axisPos = 'bottom';
+    op2.axis.stroke = 'orange';
+    op2.axis.xPad = 0;
+    op2.axis.xLabel.isVertical = true;
+    op2.dy = 15;
+    op2.indicatorLabel.dy = -5;
+    op2.indicator.color = 'steelblue';
+    op2.indicator.width = 8;
+    op2.indicator.height = 20;
+    op2.indicatorLabel.prefix = '나는 ';
+    op2.indicatorLabel.suffix = ' 계획';
+    op2.indicatorLabel.fonts = ['맑은 고딕','16px','#0088ff'];
+    op2.currentValues = '경기';
+    delete op2.method.move;
+    op2.method.moveEnd = moveEndInfo;
+    var c2iOrdinal2 = c2i.ui.slider('#c2iOrdinal02', op2).data(data).render();
+
+    var c2iOption3 = {
+        isResponsive: true, width: '100%', height: '110px', theme: 'linear-gradient(to bottom, #02111d, #037bb5, #02111d)',
+        margin : {top: 20, left: 50, right: 50, bottom: 0},
+        duration : 500,
+        data : undefined, // targetChart 없을 경우 String 배열 주입 후 진행.
+        step: 0.1, // 문자: '', 숫자: .2
+        currentValues: [1.2, 1.5],
+        sort:'', // asc, desc, '' (scale이 ordinal인 경우만 적용됩니다)
+        isRange: true, // 범위 슬라이더 여부
+
+        // ticks : ordinal은 무시, time & linear는 0 인 경우 모든 데이터 표시
+        axis: { type:'Horizontal', axisPos:'bottom', ticks:10, tickPad: 10, tickSize: 8, stroke:'yellow', strokeWidth: '1px',
+            xLabel: {rotate: 0, isVertical: false, dy: 10}},
+        indicator: { width: 5, height: 26, rx:0, ry: 0, opacity: 0.7, color:'white' },
+        indicatorLabel: { fonts:['맑은 고딕','14px','#e9f667'], prefix:'', suffix:' 달성', dx:0, dy:-15 },
+
+        targetChart: undefined, // targetChart 존재시 targetChart 데이터 & colNm 체크 및 상위 data 주입
+        // scale : time, ordinal, linear 택일
+        colNm: '', scale: 'linear', format:'.0%', fonts:['helvetica','12px','#bbb'],
+        caption:'달성률', captionFonts:['맑은 고딕','18px','#00ae54'], posXY: ['middle','top'], dx:0, dy:5,
+        method:{move:moveInfo}, // , moveEnd: moveEndInfo
+        isDev: false
+    };
+
+    var data3 = [0.9, 2.5];
+    var c2iLinear1 = c2i.ui.slider('#c2iLinear01', c2iOption3).data(data3).render();
+
+    var c2iOption4 = {
+        isResponsive: true, width: '100%', height: '110px', theme: '#333333',
+        margin : {top: 20, left: 50, right: 50, bottom: 0},
+        duration : 750,
+        data : undefined, // targetChart 없을 경우 String 배열 주입 후 진행.
+        step: '', // 문자: '', 숫자: .2
+        currentValues: [2005, 2009], // ordinal인 경우 없는 값 설정시 오류 발생합니다.
+        sort:'desc', // asc, desc, '' (scale이 ordinal인 경우만 적용됩니다)
+        isRange: true, // 범위 슬라이더 여부
+
+        // ticks : ordinal은 무시, time & linear는 0 인 경우 모든 데이터 표시
+        axis: { type:'Horizontal', axisPos:'bottom', ticks:5, tickPad: 10, tickSize: 8, xPad:0.0, stroke:'dimgray', strokeWidth: '3px',
+            xLabel: {rotate: 25, isVertical: false, dy: 10}},
+        indicator: { width: 16, height: 24, rx:6, ry: 6, opacity: 0.7, color:'steelblue' },
+        indicatorLabel: { fonts:['맑은 고딕','14px','#e9f667'], prefix:'', suffix:' 현재', dx:0, dy:-15 },
+
+        targetChart: undefined, // targetChart 존재시 targetChart 데이터 & colNm 체크 및 상위 data 주입
+        // scale : time, ordinal, linear 택일
+        colNm: '', scale: 'ordinal', format:'', fonts:['helvetica','12px','#bbb'],
+        caption:'년도 내림차순(Ordinal: 년도 누락)', captionFonts:['맑은 고딕','18px','#00ae54'], posXY: ['middle','top'], dx:0, dy:5,
+        method:{moveEnd:moveEndInfo}, // , move:moveInfo
+        isDev: false
+    };
+
+    var data4 = [2017,2000,2001,2003,2005,2006,2008,2009,2010,2011,2012,2013,2014,2015,2016];
+    var c2iOrdinal11 = c2i.ui.slider('#c2iLinear02', c2iOption4).data(data4).render();
+
+    var c2iOption5 = {
+        isResponsive: true, width: '100%', height: '110px', theme: '#444363',
+        margin : {top: 20, left: 50, right: 50, bottom: 0},
+        duration : 750,
+        data : undefined, // targetChart 없을 경우 String 배열 주입 후 진행.
+        currentValues: ['2014-01-01', '2015-01-01'],
+        sort:'desc', // asc, desc, '' (scale이 ordinal인 경우만 적용됩니다)
+        isRange: true, // 범위 슬라이더 여부
+
+        // ticks : ordinal은 무시, time & linear는 0 인 경우 모든 데이터 표시
+        axis: { type:'Horizontal', axisPos:'bottom', ticks:0, tickPad: 10, tickSize: 8, stroke:'dimgray', strokeWidth: '1px',
+            xLabel: {rotate: 0, isVertical: false, dy: 10}
+        },
+        indicator: { width: 22, height: 24, rx:6, ry: 6, opacity: 0.7, color:'steelblue'},
+        indicatorLabel: { fonts:['맑은 고딕','14px','#e9f667'], prefix:'현재 ', suffix:' 기준', dx:0, dy:-15 },
+
+        targetChart: undefined, // targetChart 존재시 targetChart 데이터 & colNm 체크 및 상위 data 주입
+        // scale : time, ordinal, linear 택일
+        colNm: '', scale: 'time', format:'%Y년', fonts:['helvetica','12px','#bbb'],
+        caption:'인구 변동 년도 (Year)', captionFonts:['맑은 고딕','16px','#fe8b8c'], posXY: ['middle','top'], dx:0, dy:5,
+        method:{moveEnd:moveEndInfo},
+        isDev: false
+    };
+
+    // 년도의 경우 월일은 항상 1월1일로 설정해야 합니다. 그렇지 않으면 월일만큼 오차 발생. 또는 ordinal 처리 권장
+    var data5 = ['2017-01-01','2000-01-01','2001-01-01','2002-01-01','2003-01-01','2004-01-01','2005-01-01','2006-01-01','2007-01-01','2008-01-01','2009-01-01',
+        '2010-01-01','2011-01-01','2012-01-01','2013-01-01','2014-01-01','2015-01-01','2016-01-01'];
+    var c2iTime1 = c2i.ui.slider('#c2iTime01', c2iOption5).data(data5).render();
+
+    var c2iOption6 = {
+        isResponsive: true, width: '100%', height: '110px', theme: 'linear-gradient(to left, #02111d, #037bb5, #02111d)',
+        margin : {top: 20, left: 50, right: 50, bottom: 0},
+        duration : 750,
+        data : undefined, // targetChart 없을 경우 String 배열 주입 후 진행.
+        currentValues: ['2016-02-01','2016-05-01'],
+        sort:'', // asc, desc, '' (scale이 ordinal인 경우만 적용됩니다)
+        isRange: true, // 범위 슬라이더 여부
+
+        // ticks : ordinal은 무시, time & linear는 0 인 경우 모든 데이터 표시
+        axis: { type:'Horizontal', axisPos:'bottom', ticks:10, tickPad: 10, tickSize: 8, stroke:'steelblue', strokeWidth: '2px',
+            xLabel: {rotate: 45, isVertical: false, dy: 10}},
+        indicator: { width: 24, height: 24, rx:12, ry: 12, opacity: 0.7, color:'yellow' },
+        indicatorLabel: { fonts:['맑은 고딕','14px','#36ff43'], prefix:'', suffix:' 현재', dx:0, dy:-15 },
+
+        targetChart: undefined, // targetChart 존재시 targetChart 데이터 & colNm 체크 및 상위 data 주입
+        // scale : time, ordinal, linear 택일
+        colNm: '', scale: 'time', format:'%y.%m', fonts:['helvetica','12px','#bbb'],
+        caption:'소득,세금 년월', captionFonts:['맑은 고딕','16px','#6ab5f9'], posXY: ['middle','top'], dx:0, dy:5,
+        method:{move:moveInfo}, // , moveEnd: moveEndInfo
+        isDev: false
+    };
+
+    // 년월의 경우 일자는 항상 1일로 설정해야 합니다. 그렇지 않으면 일자만큼 오차 발생.
+    var data6 = ['2017-02-01','2015-01-01','2015-02-01','2015-03-01','2015-04-01','2015-05-01','2015-06-01','2015-07-01','2015-08-01','2015-09-01','2015-10-01',
+        '2015-11-01','2015-12-01','2016-01-01','2016-02-01','2016-03-01','2016-04-01','2016-05-01','2016-06-01','2016-07-01','2016-08-01','2016-09-01','2016-10-01',
+        '2016-11-01','2016-12-01','2017-01-01'];
+    var c2iTime2 = c2i.ui.slider('#c2iTime02', c2iOption6).data(data6).render();
+
+    var c2iOption7 = {
+        isResponsive: true, width: '100%', height: '120px', theme: '#444363',
+        margin : {top: 10, left: 50, right: 50, bottom: 5},
+        easing: 'elastic', duration : 1000,
+        data : undefined, // targetChart 없을 경우 String 배열 주입 후 진행.
+        currentValues: ['2017-01-13T00:00:00','2017-01-17T00:00:00'], // 일자는 반드시 시:분:초 필수(T는 IE 때문에)
+        sort:'', // asc, desc, '' (scale이 ordinal인 경우만 적용됩니다)
+        isRange: true, // 범위 슬라이더 여부
+
+        // ticks : ordinal은 무시, time & linear는 0 인 경우 모든 데이터 표시
+        axis: { type:'Horizontal', axisPos:'bottom', ticks:10, tickPad: 10, tickSize: 8, stroke:'#2ac705', strokeWidth: '1px',
+            xLabel: {rotate: -45, isVertical: false, dy: 10}},
+        indicator: { width: 5, height: 22, rx:0, ry: 0, opacity: 0.7, color: ['#000','#999'] },
+        indicatorLabel: { fonts:['맑은 고딕','14px','#e9f667'], prefix:'오늘은 ', suffix:'', dx:0, dy:-10 },
+
+        targetChart: undefined, // targetChart 존재시 targetChart 데이터 & colNm 체크 및 상위 data 주입
+        // scale : time, ordinal, linear 택일
+        colNm: '', scale: 'time', format:'%y.%m.%d', fonts:['helvetica','12px','#bbb'],
+        caption:'인구 년월일', captionFonts:['맑은 고딕','16px','#00ae54'], posXY: ['middle','top'], dx:0, dy:15,
+        method:{move:moveInfo}, // , moveEnd: moveEndInfo
+        isDev: true
+    };
+
+    // 년월일의 경우 시간은 항상 T00:00:00로 설정해야 합니다.(T는 IE 때문에) 그렇지 않으면 시간만큼 오차 발생.
+    var data7 = [
+        '2017-02-02T00:00:00','2017-01-01T00:00:00','2017-01-02T00:00:00','2017-01-03T00:00:00','2017-01-04T00:00:00',
+        '2017-01-05T00:00:00','2017-01-06T00:00:00','2017-01-07T00:00:00','2017-01-08T00:00:00','2017-01-09T00:00:00',
+        '2017-01-10T00:00:00','2017-01-11T00:00:00','2017-01-12T00:00:00','2017-01-13T00:00:00','2017-01-14T00:00:00',
+        '2017-01-15T00:00:00','2017-01-16T00:00:00','2017-01-17T00:00:00','2017-01-18T00:00:00','2017-01-19T00:00:00',
+        '2017-01-20T00:00:00','2017-01-21T00:00:00','2017-01-22T00:00:00','2017-01-23T00:00:00','2017-01-24T00:00:00',
+        '2017-01-25T00:00:00','2017-01-26T00:00:00','2017-01-27T00:00:00','2017-01-28T00:00:00','2017-02-01T00:00:00'];
+    var c2iTime3 = c2i.ui.slider('#c2iTime03', c2iOption7).data(data7).render();
+
+    _setSelectBoxes();
+
+    function _setSelectBoxes() {
+        var area1 = c2iOption.currentValues[0]; var area2 = c2iOption.currentValues[1];
+        d3.select('#currentArea1')
+            .on('change', function() {
+                area1 = this.value;
+                c2iOrdinal1.currentValues([this.value, area2]);
+                c2iOrdinal2.currentValues([this.value, area2]);
+            })
+            .selectAll('option').data(data)
+            .enter().append('option')
+            .attr('value', function(d) { return d; })
+            .property('selected', function(d) {return d === area1; })
+            .html(function(d) { return d; });
+
+        d3.select('#currentArea2')
+            .on('change', function() {
+                area2 = this.value;
+                c2iOrdinal1.currentValues([this.value, area1]);
+                c2iOrdinal2.currentValues([this.value, area1]);
+            })
+            .selectAll('option').data(data)
+            .enter().append('option')
+            .attr('value', function(d) { return d; })
+            .property('selected', function(d) {return d === area2; })
+            .html(function(d) { return d; });
+
+        var ratio1 = c2iOption3.currentValues[0]; var ratio2 = c2iOption3.currentValues[1];
+        d3.select('#c2iLinear01Select1')
+            .on('change', function() {
+                ratio1 = this.value;
+                c2iLinear1.currentValues([this.value, ratio2]);
+            })
+            .selectAll('option').data(c2iLinear1.data())
+            .enter().append('option')
+            .attr('value', function(d) { return d; })
+            .property('selected', function(d) {return d === ratio1; })
+            .html(function(d) { return d; });
+
+        d3.select('#c2iLinear01Select2')
+            .on('change', function() {
+                ratio2 = this.value;
+                c2iLinear1.currentValues([this.value, ratio1]);
+            })
+            .selectAll('option').data(c2iLinear1.data())
+            .enter().append('option')
+            .attr('value', function(d) { return d; })
+            .property('selected', function(d) {return d === ratio2; })
+            .html(function(d) { return d; });
+
+        var date1 = new Date(c2iOption7.currentValues[0]); var date2 = new Date(c2iOption7.currentValues[1]);
+        d3.select('#c2iTime03Select1')
+            .on('change', function() {
+                date1 = this.value;
+                c2iTime3.currentValues([this.value, date2]);
+            })
+            .selectAll('option').data(c2iTime3.data())
+            .enter().append('option')
+            .attr('value', function(d) { return d; })
+            .property('selected', function(d) {
+                return d.getTime() === date1.getTime(); })
+            .html(function(d) { return d3.time.format('%y년 %m월 %d일')(d); });
+        d3.select('#c2iTime03Select2')
+            .on('change', function() {
+                date2 = this.value;
+                c2iTime3.currentValues([this.value, date1]);
+            })
+            .selectAll('option').data(c2iTime3.data())
+            .enter().append('option')
+            .attr('value', function(d) { return d; })
+            .property('selected', function(d) {return d.getTime() === date2.getTime(); })
+            .html(function(d) { return d3.time.format('%y년 %m월 %d일')(d); });
+    }
+</script>
+<script>
+    d3.select('#clear').on('click', function() {
+        if (c2iTime1) {
+            c2iTime1.clear(); c2iTime2.clear(); c2iTime3.clear();
+            c2iTime1 = undefined; c2iTime2 = undefined; c2iTime3 = undefined;
+        }
+    });
+
+    d3.select('#create').on('click', function() {
+        if (!c2iTime1) {
+            c2iTime1 = c2i.ui.slider('#c2iTime01', c2iOption5).data(data5).render();
+            c2iTime2 = c2i.ui.slider('#c2iTime02', c2iOption6).data(data6).render();
+            c2iTime3 = c2i.ui.slider('#c2iTime03', c2iOption7).data(data7).render();
+        }
+    });
+
+    d3.select('#save').on('click', exportImage);
+    function exportImage(){
+        c2i.util.exportImage(['#c2iOrdinal01', '#c2iOrdinal02', '#c2iLinear01', '#c2iLinear02']);
+        if (c2iTime1) {
+            c2i.util.exportImage(['#c2iTime01', '#c2iTime02', '#c2iTime03']);
+        }
+    }
+
+    d3.select('#c2iGuide').on('click', c2iGuide);
+    d3.select('#c2iGuideClose').on('click', c2iGuideClose);
+
+    function c2iGuide() {
+        d3.select('#c2iGuideInfo').classed('c2iHidden', !d3.select('#c2iGuideInfo').classed('c2iHidden'));
+    }
+    function c2iGuideClose() {
+        d3.select('#c2iGuideInfo').classed('c2iHidden', true);
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+/* 아래 스타일시트 정보는 도움말에 적용될 클래스이며,
+   Gloal로 적용되니 클래스명을 c2iHelp__Bold 등과 같이 중복없는 설정이 필요합니다. */
+
+.c2iHelp_Title {
+  font-size: 18px;
+  color: orange;
+}
+
+.c2iHelp_Bottom {
+  padding: 7px 14px;
+}
+
+.c2iHelp_KeywordLg {
+  font-size: 30px;
+}
+
+.c2iHelp_KeywordMd {
+  font-size: 24px;
+}
+
+.c2iHelp_KeywordLSd {
+  font-size: 18px;
+}
+
+.c2iHelp_Bold {
+  font-weight: bold;
+  color: coral;
+}
+
+.orange-text {
+  color: orange;
+}
+
+.bgTransparent{
+  background-color: transparent !important;
+}
+
+/* 애니메이션 문자 */
+.c2iMainContent .c2i_text{
+  padding-top: 5px !important; 
+}
+/* 
+.c2iLegendFloat {
+  position: absolute;
+  left: 30px;
+  top: 100px;
+  /* for Vuetify */
+
+
+/* z-index: 0; */
+
+
+/* } */
+
+.c2iLegendFloatRight {
+  position: absolute;
+  right: 10px;
+  top: 70px;
+  z-index: 1;
+}
+
+/* for Vuetify */
+
+.dg li.title {
+  font-size: 12px !important;
+  font-weight: 500;
+  line-height: 2.5 !important;
+}
+
+.c2iLegendTip .c2iCloseBtn {
+  top: 10px !important;
+}
+
+
+/* for ie */
+
+.v-label {
+  font-size: 14px !important;
+}
+
+
+/* for Vue-jstree ie */
+
+.tree-anchor {
+  font-size: 12px !important;
+}
+
+
+/* for vue v3 */
+
+.dg select,
+.c2iFilterDlg input {
+  color: white;
+  background-color: dimgray;
+}
+
+.c2iFilterDlg input {
+  height: 22px;
+}
+
+.c2iFilterDlg ul,
+.c2iFilterDlg ol {
+  margin: 2px !important;
+}
+
+/* for Survey-Wow */
+#c2iWowTooltip table {
+  min-width: 360px;
+}
+/* mini histogram, boxplot */
+.c2iTooltip table,
+.c2iTooltip th,
+.c2iTooltip td {
+  font-size: 13px;
+}
+
+.c2iHtSingle {
+  background-image: linear-gradient(to left, #333333 0%, #222222 100%);
+  background-position: 0% 0%;
+}
+/* Vuetify Modify */
+.v-data-table > .v-data-table__wrapper > table > tbody > tr > th,
+.v-data-table > .v-data-table__wrapper > table > thead > tr > th,
+.v-data-table > .v-data-table__wrapper > table > tfoot > tr > th {
+  font-size: 0.85rem !important;
+}
+.v-data-footer__select .v-select__selections .v-select__selection--comma {
+  font-size: 0.85rem !important;
+}
+.v-data-footer {
+  font-size: 0.85rem !important;
+}
+
+.v-step{
+  background-color: #606060 !important;
+  /* background: linear-gradient(to right, #606060, #3c3c3c, #606060) !important; */
+  max-width: 380px !important;
+  border-radius: 0 !important;;
+  padding: 0.8rem !important;;
+}
+.v-step__arrow, .v-step__arrow:before{
+  background: #606060 !important;
+}
+.v-step .v-step__header {
+  background-color: #2196f3 !important;
+  margin: -0.3rem -0.78rem .5rem !important;
+  padding: .4rem 0 0.1rem !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  /* background: linear-gradient(to right, #4682b4, #204674, #4682b4) !important; */
+}
+
+.v-step .v-step__arrow--dark:before{
+  background-color: #606060 !important;
+}
+
+.v-step .v-step__content {
+  font-size: 13px !important;
+}
+
+.v-application .v-main .v-tour__target--highlighted {
+  box-shadow: 0 0 0 99999px rgba(0,0,0,.6) !important;
+  -webkit-box-shadow: 0 0 0 99999px rgba(0,0,0,.6) !important;
+  border-width: medium !important;
+  border-style: solid !important;
+  border-color: #d56ad2!important;
+}

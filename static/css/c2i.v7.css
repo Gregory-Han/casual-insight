@@ -1,0 +1,1581 @@
+/*!
+ * c2i - v7.6.1 (http://casual-insight.com)
+ * Copyright 2016-2022 by Han Jong In (한종인)
+ * Licensed under Commercial
+ */
+.c2iMiniTip {
+  position: absolute;
+  text-align: center;
+  width: auto;
+  height: auto;
+  color: #eee;
+  padding: 5px;
+  font: 12px sans-serif;
+  background-color: rgba(9, 9, 9, 0.6);
+  -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+  z-index: 210;
+}
+
+.c2iNoSelect {
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Chrome/Safari/Opera */
+  -khtml-user-select: none;
+  /* Konqueror */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently not supported by any browser */
+}
+
+.c2iHidden,
+.ci18n {
+  display: none !important;
+}
+
+.c2iSelectTarget {
+  border: 1.5px dashed #ffd300;
+}
+
+.c2iCurOptWin {
+  z-index: 100 !important;
+}
+
+.c2iCurOptWinH {
+  background-color: #ffd300 !important;
+}
+
+.dg li.save-row {
+  display: none !important;
+}
+
+.c2iSliderSimple {
+  display: none;
+  position: absolute;
+  opacity: 0.7;
+  width: 100px;
+  top: 15px;
+  left: 15px;
+}
+
+
+/* tooltip 스타일 적용 */
+
+.c2iTooltip {
+  position: absolute;
+  text-align: center;
+  width: auto;
+  height: auto;
+  padding: 5px;
+  color: #eee;
+  left: 50%;
+  top: 50px;
+  background-color: rgba(9, 9, 9, 0.6);
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+  z-index: 210;
+}
+
+.c2iTooltip table,
+.c2iTooltip th,
+.c2iTooltip td {
+  border: 1px solid gray;
+  border-collapse: collapse;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.c2iTooltip>th {
+  background-color: gray;
+}
+
+.c2iTooltip p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.c2iTooltip .tipRatio {
+  font-size: 12px;
+  color: yellow;
+  padding: 2px 0 3px;
+}
+
+.c2iTooltip .tipHeader {
+  text-align: center;
+  margin: 0;
+}
+
+.c2iTooltip .tipRowHeaderR {
+  text-align: right;
+}
+
+.c2iTooltip .tipRowHeaderL {
+  text-align: left;
+}
+
+.c2iTooltip .tipName {
+  width: 45px;
+  text-align: center;
+}
+
+.c2iTooltip .tipAll,
+.c2iTooltip .tipSeries,
+.c2iTooltip .tipGroup {
+  width: 50px;
+  text-align: right;
+}
+
+.c2iTooltip .number {
+  text-align: right;
+}
+
+.c2iTooltip .string {
+  text-align: right;
+}
+
+.c2iTooltip .negative {
+  color: rgb(250, 152, 116);
+}
+
+.c2iTooltip .positive {
+  color: greenyellow;
+}
+
+.c2iTooltip .tipImage {
+  text-align: center;
+}
+
+.c2iBreadcrumb {
+  width: 95%;
+  height: 5px;
+  font-weight: 600;
+  font-size: 11px;
+  fill: #ccc;
+}
+
+
+/* Option & Admin 스타일 적용 */
+
+.c2iOption {
+  position: absolute;
+  width: auto !important;
+  /* !important for IE */
+  height: auto !important;
+  /* !important for IE */
+  padding: 5px;
+  top: 0;
+  color: #444;
+  background-color: #bbb;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  pointer-events: all;
+  z-index: 210;
+}
+
+.c2iOption table,
+.c2iOption th,
+.c2iOption td {
+  border: 1px solid gray;
+  border-collapse: collapse;
+  font-size: 12px;
+  line-height: 1.2;
+  vertical-align: middle;
+  padding: 3px 3px 2px !important;
+}
+
+.c2iOption>thead {
+  background-color: gray;
+  color: #222;
+  font-size: 14px;
+}
+
+.c2iOption>th {
+  background-color: gray;
+}
+
+.c2iOption .tipHeader {
+  background-color: gray;
+  color: #222;
+  font-size: 14px;
+  text-align: center;
+}
+
+.c2iOption .tipHeader div {
+  margin: 8px 10px 2px 10px;
+}
+
+.c2iOption .caption {
+  width: 115px;
+  text-align: right;
+  padding-right: 3px;
+}
+
+.c2iOption .tdContentLeft {
+  width: 100%;
+  text-align: left;
+  padding-left: 3%;
+}
+
+.c2iOption .tdContentLeft2 {
+  width: 100%;
+  height: 20px;
+  padding: 1% 3%;
+}
+
+.c2iOption .tdContent {
+  width: 100%;
+  text-align: center;
+}
+
+.c2iOption label {
+  margin-left: 3px;
+}
+
+.c2iOption label>input {
+  margin-left: 2px;
+}
+
+.c2iOption .isDev {
+  background-color: #a7a7a7;
+}
+
+.c2iOption .c2iOptionHeader {
+  cursor: move;
+  background-color: #545454;
+  width: 15px;
+  height: 35px;
+  margin: 0 !important;
+  /* 반드시 필요 */
+  padding: 0;
+  float: left;
+}
+
+.c2iOption .m3px {
+  margin-left: 3px;
+}
+
+.c2iOption .m4px {
+  margin-left: 4px;
+}
+
+.c2iOption .m5px {
+  margin-left: 5px;
+}
+
+.c2iOption .m10px {
+  margin-left: 10px;
+}
+
+.c2iOption select {
+  -moz-appearance: menulist;
+  -webkit-appearance: menulist;
+  appearance: menulist;
+}
+
+.c2iOption span.revert {
+  display: none !important;
+}
+
+.c2iOption .dg select {
+  min-width: 120px;
+}
+
+.c2iOptionBtn {
+  width: 16px;
+  margin-left: -4px;
+}
+
+.c2iShrinkBtn {
+  cursor: pointer;
+  float: left;
+  z-index: 20;
+}
+
+.c2iOptionTitle {
+  position: absolute;
+  top: 7px;
+  left: 28px;
+  font-size: 11px;
+  width: 195px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.c2iCloseBtn {
+  position: absolute;
+  cursor: pointer;
+  right: 10px;
+  float: right;
+  z-index: 20;
+}
+
+.c2iLegendTip .c2iCloseBtn {
+  top: 7px;
+}
+
+.optionBtn{
+  opacity: 0.8;
+}
+
+/* Legend 표시 */
+
+.c2iLegend {
+  font: 13px sans-serif;
+  text-align: left;
+  display: inline-block;
+  overflow: auto;
+  /* v6 */
+  min-height: 30px;
+  max-height: 80px;
+  z-index: 5;
+}
+
+.c2iLegend .c2iLgItem {
+  margin-left: 8px;
+  cursor: pointer;
+}
+
+.c2iLegend .c2iLgItem input {
+  /* radio 여백 */
+  margin-left: 3px;
+}
+
+.c2iLegend .c2iLegendQuantile path {
+  fill: none;
+}
+
+.c2iLegend .c2iLegendQuantile line {
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+
+/* Legend 표시 (ordinal) */
+
+.c2iLegend svg {
+  cursor: move;
+}
+
+.c2iLegend rect {
+  stroke: #bfbfbf;
+  cursor: default;
+}
+
+.c2iLegend .legendText {
+  font: 12px sans-serif;
+}
+
+.c2iLegend .rectHover {
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+
+/* 공통 사용 */
+.c2iNegative {
+  fill: red !important;
+}
+
+.c2iPositive {
+  fill: green !important;
+}
+
+/* 범례 동적 변화를 위해 (in Vue) */
+.c2iLegendFloat {
+  position: absolute;
+  left: 10px;
+  z-index: 100;
+}
+
+.c2iLegendQuantile line,
+.c2iLegendQuantile text {
+  pointer-events: none;
+}
+
+/* Animate & Vuetify */
+.c2iTopPadding{
+  padding-top: 6px;
+}
+.c2iBudget .main text,
+.c2iBudget .mainEx path,
+.c2iBudget .main path,
+.c2iBudget .planet path{
+    cursor: pointer;
+}
+.c2iCalView .gGroupBy rect {
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+
+.c2iCalView .gGroupBy .sameMonth rect {
+  stroke: red;
+  stroke-opacity: 0.9;
+}
+
+.c2iCalView .gGroupBy .sameMonth text {
+  font-size: 110% !important;
+  fill: orange !important;
+}
+
+.c2iCalView text {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.c2iCalView .axis path,
+.c2iCalView .axis line {
+  fill: none;
+  stroke: #fff;
+  shape-rendering: crispEdges;
+}
+
+.c2iCalView .gYear,
+.c2iCalView .gMonth {
+  cursor: pointer;
+}
+.c2iCorR svg *::selection,
+.c2iCorR svg *::-moz-selection {
+  background: transparent;
+}
+
+.c2iCorR rect.selection {
+  stroke: #000;
+  stroke-dasharray: 5px;
+  stroke-opacity: 1;
+  fill: #666;
+  fill-opacity: 0.5;
+}
+
+.c2iCorR rect.cellB {
+  stroke-width: 1px;
+}
+
+.c2iCorR rect.cell-selected {
+  stroke: rgb(0, 140, 255) !important;
+  stroke-dasharray: 2px;
+  stroke-width: 2px !important;
+}
+
+.c2iCorR rect.cell-pos {
+  stroke: #fff !important;
+  stroke-width: 2px !important;
+}
+
+.c2iCorR rect.cell-hover {
+  stroke: #f7535b !important;
+  stroke-width: 2px !important;
+}
+
+.c2iCorR text.cValue {
+  pointer-events: none;
+}
+
+.c2iCorR text.text-selected {
+  fill: #bbb !important;
+  font-size: 85% !important;
+}
+
+.c2iCorR text.text-highlight {
+  fill: orange !important;
+  font-size: 85% !important;
+}
+
+.c2iCorR text.text-hover {
+  fill: orange !important;
+  font-size: 85% !important;
+}
+
+.c2iCorR text.summary {
+  font: 13px sans-serif;
+  fill: brown;
+}
+
+.c2iCorR .bar rect.rect-hover {
+  fill-opacity: 0.7;
+  /* orange*/
+}
+
+.c2iCorR .bar text.value {
+  font-size: 12px;
+  pointer-events: none;
+}
+
+.c2iCorR .bar.positive {
+  fill: steelblue;
+}
+
+.c2iCorR .bar.negative {
+  fill: brown;
+}
+
+
+/* axes 표시 */
+
+.c2iCorR .axis path,
+.c2iCorR .axis line {
+  fill: none;
+  shape-rendering: crispEdges;
+  vector-effect: non-scaling-stroke;
+}
+
+.c2iCorR .x.axis line {
+  stroke: #ccc;
+  stroke-opacity: .3;
+  pointer-events: none;
+}
+
+.c2iCorR .y.axis path {
+  stroke: #fff;
+}
+
+.c2iCorR .axis text {
+  font-size: 12px;
+}
+.c2iCountry .boundary {
+  fill: none;
+  stroke: #666;
+  stroke-width: 1.2px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.c2iCountry .feature.active {
+  fill: orange;
+}
+
+.c2iCountry .L1-ghost {
+  stroke: #999;
+  stroke-width: 1px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.c2iCountry .L2-ghost {
+  stroke: #444;
+  stroke-width: 0.3px;
+  /*stroke-dasharray: 2 2; bug? */
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  stroke-opacity: 1;
+}
+
+.c2iCountry line {
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.c2iCountry .boundary path,
+.c2iCountry .c2iTextures path,
+.c2iCountry .body circle,
+.c2iCountry .body line {
+  vector-effect: non-scaling-stroke;
+}
+
+.c2iCountry text {
+  pointer-events: none;
+}
+.c2iDumbo .xyTextHover {
+    fill: #cfdd3f !important;
+    font-size: 105% !important;
+    font-weight: bold !important;
+    -webkit-transition:all 0.7s;
+    -moz-transition:all 0.7s;
+    -o-transition:all 0.7s;
+    transition:all 0.7s;
+    opacity: .8;
+}
+.c2iHi .link {
+    fill: none;
+}
+
+.c2iHi .ghostArea.show {
+    display:block;
+}
+
+.c2iHi .ghostArea,
+.c2iHi .activeDrag .ghostArea {
+    display: none;
+}
+
+.c2iHi .node tspan {
+     pointer-events: none;
+}
+
+.c2iSelectBox{
+    display: inline-flex;    
+    align-items: center;
+    margin-left: 5px;
+    width: 20%;
+    min-width: 120px;
+    max-width: 300px;
+
+    -webkit-appearance: none; 
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.c2iSelectBox2{
+    display: inline-flex;    
+    align-items: center;
+    margin-left: 5px;
+    width: 45%;
+    min-width: 200px;
+    max-width: 400px;
+
+    -webkit-appearance: none; 
+    -moz-appearance: none;
+    appearance: none;
+}
+select::-ms-expand {    
+    display: none;
+}
+
+.c2iSelection {
+    margin-left: 5px;
+    width: 70%;
+    padding: .3em; 
+    min-width: 90px;
+    text-overflow: ellipsis;
+    border: 1px solid #777;
+}
+.c2iSelection2 {
+    margin-left: 5px;
+    width: 80%;
+    padding: .3em; 
+    text-overflow: ellipsis;
+    border: 1px solid #777;
+}
+.c2iSelection option,
+.c2iSelection2 option{
+    background-color: #666;
+    color: currentColor;
+}
+
+.c2iSelection option:hover {
+    background-color:rgb(252, 170, 88);
+    color:white;
+}
+
+.c2iChecked{
+    display: inline-flex;
+    align-items: center;
+    margin: 0 5px;
+    width: 60px;
+    max-width: 300px;
+}
+
+.c2iCheckBox{
+    margin: 0 0 2px 5px;
+}
+
+.c2iRadioBtn{
+    margin: 0 0 2px 5px;
+}
+.c2iBi g.y2 {
+  pointer-events: none;
+}
+
+
+/* for Layout */
+
+.c2iOption .dg .close-button {
+  display: none;
+}
+
+.c2iOption .dg .property-name {
+  font-size: 10px;
+}
+
+.c2iOption .optionHandle {
+  top: 10px;
+  cursor: move;
+  height: 14px;
+}
+
+
+/* for Layout */
+
+.c2iOption .c2iOptionTitle {
+  /* position: absolute;
+  top: 7px;
+  left: 28px;
+  font-size: 11px;
+  width: 195px; */
+}
+
+
+/* calView */
+
+.c2iBi .gGroupBy rect {
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+
+.c2iBi .gGroupBy line {
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+  pointer-events: none;
+}
+
+.c2iBi .gGroupBy .sameMonth rect {
+  stroke: red;
+  stroke-opacity: 0.9;
+}
+
+.c2iBi .gGroupBy .sameMonth text {
+  font-size: 105% !important;
+  fill: orange !important;
+}
+
+.c2iBi .gGroupBy .dayAvgText {
+  pointer-events: none;
+}
+
+.c2iBi text {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.c2iBi .minMonth,
+.c2iBi .maxMonth,
+.c2iBi .avgText {
+  text-anchor: end;
+  pointer-events: none;
+}
+
+.c2iBi .axis path,
+.c2iBi .axis line {
+  fill: none;
+  stroke: grey;
+  shape-rendering: crispEdges;
+}
+
+.c2iBi .gYear,
+.c2iBi .gMonth,
+.c2iBi .circles,
+.c2iBi .monthValues {
+  cursor: pointer;
+}
+
+
+/* calView end */
+
+.c2iBi .xBrush .overlay {
+  fill: lightgray;
+  fill-opacity: 0.25;
+}
+
+.c2iBi .optionPosition {
+  top: 18px;
+  right: 0px;
+}
+
+.c2iBi.animateNumber {
+  text-align: center;
+}
+
+.c2iDataList {
+  display: flex;
+  overflow: auto;
+  max-height: 750px;
+  width: 90%;
+}
+
+.c2iDataList thead th {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+
+.c2iDataList table {
+  background-color: #727272;
+  font-size: 12px;
+  border-collapse: collapse;
+  overflow-y: scroll;
+}
+
+.c2iDataList .c2iColHeader {
+  background-color: dimgray;
+  font-size: 12px;
+}
+
+.c2iDataList .exitBtn {
+  width: 30px;
+  cursor: pointer;
+  font-weight: bold;
+  color: red;
+  z-index: 1;
+}
+
+.c2iDataList .c2iColCaption,
+.c2iDataList .dataRow td {
+  color: #eeeeee;
+}
+
+.c2iDataList .dataRow td {  
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 80px;
+  max-width: 150px;
+}
+
+.c2iDataList .c2iBroupby {
+  background-color: #007bff;
+}
+
+.c2iDataList .c2iColMeasure {
+  text-align: right;
+  background-color: steelblue;
+}
+
+.c2iDataListFloat {
+  position: absolute;
+  cursor: move;
+  z-index: 998;
+}
+
+.c2iDataList .groupByTd {
+  font-size: 13px;
+  background-color: darkgray;
+  color: darkred;
+}
+
+.c2iDataList .positive {
+  color: darkblue !important;
+  font-weight: bold;
+}
+
+.c2iDataList .negative {
+  color: red !important;
+}
+
+.c2iDataList tbody tr:hover {
+  color: orange !important;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.c2iDataList tr:nth-child(even) {
+  background-color: #919191;
+}
+
+.c2iDataList th,
+.c2iDataList td {
+  padding: 0.5rem !important;
+  vertical-align: top;
+  border-top: 1px solid #dee2e6;
+}
+
+.c2iDataList th {
+  background-color: #727272;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 80px;
+  max-width: 150px;
+}
+
+
+/* iGroupFilter */
+
+.c2iFilterDlg {
+  position: absolute;
+  width: auto;
+  height: auto;
+  padding: 5px 2px 3px 2px;
+  color: #eee;
+  background-color: #bbb;
+  -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  opacity: 0.9;
+  resize: horizontal;
+  font-size: 12px;
+  overflow: auto;
+  min-width: 960px;
+  min-height: 300px;
+}
+
+.c2iFilterDlg .c2iCloseBtn {
+  position: absolute;
+  top: 9px;
+  right: 14px;
+  cursor: pointer;
+  z-index: 20;
+}
+
+.c2iFilterDlg .c2iMinimizeBtn {
+  position: absolute;
+  top: 9px;
+  left: 10px;
+  cursor: pointer;
+  z-index: 20;
+}
+
+.c2iFilterDlg .c2iFilterBtnR {
+  float: right;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.c2iFilterDlg .c2iFilterBtnL {
+  float: left;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.c2iFilterDlg .c2iFilterHandle {
+  cursor: move;
+  background-color: #444;
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  padding: 3px;
+  line-height: 1.8em;
+}
+
+.c2iFilterDlg .c2iCmdBtn {
+  cursor: pointer;
+}
+
+
+/* Create three equal columns that floats next to each other */
+
+.c2iFilterDlg .headerColFirst {
+  float: left;
+  width: 24%;
+  padding: 2px 5px;
+  margin-top: 3px;
+}
+
+.c2iFilterDlg .headerCol {
+  float: left;
+  width: 24%;
+  padding: 2px;
+  margin-top: 16px;
+}
+
+.c2iFilterDlg .c2iHeader2 {
+  margin-top: 25px;
+  margin-bottom: 2px;
+}
+
+.c2iFilterDlg .c2iHeader3 {
+  margin-top: 4px;
+  margin-left: -5px;
+  display: flex;
+}
+
+.c2iFilterDlg .column {
+  float: left;
+  width: 23.99%;
+  margin-bottom: -3px;
+  overflow: auto;
+  height: 300px;
+  border-color: #797979;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.c2iFilterDlg .colMin {
+  float: left;
+  width: 4%;
+  height: 300px;
+  padding: 5px 11px;
+  margin-bottom: -3px;
+  align-content: start;
+  display: flex;
+  flex-wrap: wrap;
+  border-color: #797979;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.c2iFilterDlg .column>span {
+  position: fixed;
+  margin: 120px 190px;
+  text-align: end;
+  font-size: 16px;
+  color: yellow;
+  opacity: 0.3;
+}
+
+
+/* Clear floats after the columns */
+
+.c2iFilterDlg .row {
+  margin: 0;
+  border-color: #aaaaaa;
+  border-width: 1px;
+  border-bottom-style: solid;
+  background-color: #141414ee;
+}
+
+.c2iFilterDlg .workArea {
+  padding: 0 0 3px 0;
+}
+
+.c2iFilterDlg .sourceCaption {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 95%;
+  margin-top: 4px;
+}
+
+.c2iFilterDlg ul,
+.c2iFilterDlg ol {
+  margin-left: -25px;
+}
+
+.c2iFilterDlg ul li,
+.c2iFilterDlg ol li {
+  list-style-type: none;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 95%;
+}
+
+.c2iFilterDlg .c2iSelected {
+  color: steelblue !important;
+}
+
+.c2iFilterDlg .row:after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+.dg > ul {
+  padding: 0 !important;
+}
+.c2iMiniUi.mainTitle {
+    font-size: 15px;
+    background-color: rgb(73, 73, 73);
+    opacity: 0.9;
+}
+.c2iMiniUi.subTitle {
+    font-size: 14px;
+    background-color: rgb(114, 114, 114);
+    opacity: 0.9;
+}
+.c2iMotion .axis path, .c2iMotion .axis line {
+    fill: none;
+    stroke: dimgray;
+    shape-rendering: crispEdges;
+}
+
+/* x, y, y2 그리드 스타일 적용 */
+.c2iMotion g.x g.tick line,
+.c2iMotion g.y g.tick line,
+.c2iMotion g.y2 g.tick line{
+    stroke: dimgray;
+    shape-rendering: crispEdges;
+    stroke-opacity: .3;
+}
+.c2iMotion g.y2 g.tick line{
+    stroke: #000;
+    stroke-dasharray: 5px 5px;
+}
+
+/* 레이블 폰트 정의 */
+.c2iMotion .axis text {
+    font: 11px sans-serif;
+    fill: gray;
+}
+/* x,y 관련 동적 select-box */
+.c2iDynamicSelect {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    padding: 10px;
+
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    overflow: hidden;
+    background: transparent;
+}
+
+.c2iDynamicSelect option:hover {
+    box-shadow: 0 0 10px 100px #b4b4b4 inset;
+}
+
+.__colorPickerTip{
+    margin: 2px 0;
+    padding: 0 2px;
+}
+.c2iPC{
+    min-width: 460px !important;
+    min-height: 400px !important;
+}
+
+/* axes 표시 */
+.c2iPC .axis path, .c2iPC .axis line,
+.c2iPC .foreground path, .c2iPC .background path {
+    vector-effect: non-scaling-stroke;
+}
+/* 파이 차트의 레이블 문자 표시 */
+.c2iPie .inLabels text {
+    font: 12px sans-serif;
+    fill: #0842ef;
+}
+
+.c2iPie .labels text {
+    font: 12px sans-serif;
+    fill: #bcbcbc;
+}
+
+/* 파이 차트의 조각별 경계선 표시 */
+.c2iPie .slices path {
+    stroke: #bfbfbf;
+    stroke-width: 1px;
+}
+
+.c2iPie .slices path:hover {
+    stroke: green;
+    stroke-width: 3px;
+}
+
+.c2iPie polyline{
+    opacity: .7;
+    stroke: #bcbcbc;
+    stroke-width: 2px;
+    fill: none;
+}
+.c2iPyramid .highlight text {
+  text-decoration: underline !important;
+  font-size: 85% !important;
+}
+
+.c2iPyramid .outLabel {
+  fill: rgb(250, 111, 60) !important;
+}
+
+.c2iPyramid .avgLine {
+  stroke: yellow;
+  stroke-width: 3px;
+  stroke-opacity: 1;
+  stroke-dasharray: 3 3;
+}
+
+.c2iPyramid .rightBefore, .c2iPyramid .leftBefore{
+  opacity: 0.9
+}
+
+/* axes 표시 */
+
+.c2iPyramid .axis path,
+.c2iPyramid .axis line {  
+  shape-rendering: crispEdges;
+  vector-effect: non-scaling-stroke;
+}
+
+
+/* x, y, y2 그리드 스타일 적용 */
+
+.c2iPyramid g.x g.tick line,
+.c2iPyramid g.y g.tick line,
+.c2iPyramid g.y2 g.tick line {
+  shape-rendering: crispEdges;
+}
+
+.c2iQuad .split,
+.c2iQuad .qLabel,
+.c2iQuad .qSummary{
+    cursor: move;
+}
+
+/* axes 표시 */
+.c2iQuad .axis path, .c2iQuad .axis line {
+    fill: none;
+    stroke: dimgray;
+    shape-rendering: crispEdges;
+}
+
+/* x, y, y2 그리드 스타일 적용 */
+.c2iQuad g.x g.tick line,
+.c2iQuad g.y g.tick line,
+.c2iQuad g.y2 g.tick line{
+    stroke: dimgray;
+    shape-rendering: crispEdges;
+    stroke-opacity: .3;
+}
+.c2iQuad g.y2 g.tick line{
+    stroke: #000;
+    stroke-dasharray: 5px 5px;
+}
+
+/* 레이블 폰트 정의 */
+.c2iQuad .axis text {
+    font: 11px sans-serif;
+    fill: gray;
+}
+/* x,y 관련 동적 select-box */
+.c2iDynamicSelect {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    padding: 10px;
+
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    overflow: hidden;
+    background: transparent;
+}
+
+.c2iDynamicSelect option:hover {
+    box-shadow: 0 0 10px 100px #b4b4b4 inset;
+}
+
+.__colorPickerTip{
+    margin: 2px 0;
+    padding: 0 2px;
+}
+
+
+
+.c2iStd {
+  width: 100%;
+  height: 100%;
+  min-width: 260px;
+  min-height: 150px;
+}
+
+
+/* axes 표시 */
+
+.c2iStd .axis path,
+.c2iStd .axis line {
+  fill: none;
+  stroke: dimgray;
+  shape-rendering: crispEdges;
+  vector-effect: non-scaling-stroke;
+}
+
+
+/* x, y, y2 그리드 스타일 적용 */
+
+.c2iStd g.x g.tick line,
+.c2iStd g.y g.tick line,
+.c2iStd g.y2 g.tick line {
+  stroke: dimgray;
+  shape-rendering: crispEdges;
+  stroke-opacity: .3;
+}
+
+
+/* Line, Stack-Line 정의 */
+
+.c2iStd .line,
+.c2iStd .stackLine {
+  fill: none;
+}
+
+.c2iStd .xBrush text {
+  fill-opacity: .4 !important;
+}
+
+.c2iStd .xBrush text.selected {
+  fill-opacity: 1 !important;
+}
+
+.c2iStd .xBrushG .extent {
+  fill-opacity: .125 !important;
+  shape-rendering: crispEdges !important;
+}
+
+.c2iStd text {
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Chrome/Safari/Opera */
+  -khtml-user-select: none;
+  /* Konqueror */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently not supported by any browser */
+}
+
+
+/* transition 과 함께 적굥시 버그 존재
+.c2iStd .stackLine:hover,
+.c2iStd .line:hover {
+    stroke-dasharray: 6 3;
+    stroke-width: 5px;
+    -webkit-transition:all 0.5s;
+    -moz-transition:all 0.5s;
+    -o-transition:all 0.5s;
+    transition:all 0.5s;
+}
+*/
+
+
+/* dot label 정의 */
+
+.c2iStd .dotLabel {
+  font: 11px sans-serif;
+}
+
+
+/* Label Text */
+
+.c2iStd .lbl>text {
+  font-size: 11px;
+}
+
+
+/* bar Text & Bar style 조정 */
+
+.c2iStd .xyTextHover {
+  fill: #cfdd3f !important;
+  font-size: 105% !important;
+  font-weight: bold !important;
+  -webkit-transition: all 0.7s;
+  -moz-transition: all 0.7s;
+  -o-transition: all 0.7s;
+  transition: all 0.7s;
+  opacity: .8;
+}
+
+.c2iStd .barHover {
+  stroke: #a51316 !important;
+  stroke-dasharray: 6px 3px;
+  stroke-width: 3px;
+  -webkit-transition: all 0.7s;
+  -moz-transition: all 0.7s;
+  -o-transition: all 0.7s;
+  transition: all 0.7s;
+  fill-opacity: .8;
+  stroke-opacity: .8;
+}
+
+
+/* xyGrid */
+
+.c2iStd .axes .cursor path,
+.c2iStd .axes .cursor line {
+  fill: none;
+  stroke: orange;
+  shape-rendering: crispEdges;
+}
+
+.c2iStd .cursor text {
+  text-anchor: end;
+  font-size: 10px;
+  font-weight: bold;
+}
+#c2iMenu .actived {
+    color: #f0efef;
+    background: rgba(241, 134, 46, 0.75);
+}
+  
+.c2iLegendLeft {
+    position: absolute;
+    top: 120px;
+    left: 210px;
+    z-index: 99
+}
+
+.c2iLegendRight {
+    position: absolute;
+    top: 120px;
+    left: 800px;
+    z-index: 99
+}
+
+.c2iPositionGrid {
+    position: absolute;
+    top: 120px;
+    left: 15px;
+    z-index: 99
+}
+
+.c2iOptionPosition {  
+    top: 10px !important;
+    right: 400px !important;
+}
+
+.c2iNode {
+    font-weight: bold;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    border: 2px solid rgba(127, 255, 255, 0.25);
+    text-align: center;
+    cursor: default;    
+}
+
+.c2iNodeHover {
+    box-shadow: 0 0 12px rgba(0, 255, 255, 0.75) !important;
+    border-width: 4px !important;
+    border-style: dashed !important;
+}
+
+.c2iNode .mainMeasure {
+    position: absolute;
+    top: 35px;
+    left: 0;
+    right: 0;
+}
+
+.c2iNode .mainMeasure .rank {
+    font-size: 24px;
+}
+
+.c2iNode .mainDesc {
+    position: absolute;
+    top: 66px;
+    left: 0;
+    right: 0;
+}
+
+.c2iNode .gTitle {
+    position: absolute;
+    top: 5px;
+    left: 0;
+    right: 0;
+}
+
+.c2iNode .axis path,
+.c2iNode .axis line {
+    fill: none;
+    stroke: #fff;
+    shape-rendering: crispEdges;
+}
+
+.c2iNode .lgText{
+    font-size: 8px;
+    fill: #fff;
+}
+
+.c2iNode .c2iKey {
+    position: absolute;
+    left: 0;
+    right: 0;
+    padding: 5px 0 0;
+}
+
+.c2iNode .c2iKeyCount {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 16px;
+    font-weight: bolder;
+    color: rgba(127, 255, 255, 0.90) !important;
+}
+
+.c2iNode .c2iValues{
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    font-size: 20px;
+    color: rgba(49, 49, 49, 0.85);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.c2iNode .c2iLastItem {
+    text-shadow: 0 0 5px rgba(250, 0, 0, 0.95);
+}
+  
+.c2iNode .c2iWowImg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 0px;
+    z-index: -1;
+}
+  
+.c2iSunburst .rootCaption{
+    fill: yellow;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.c2iSunburst  .pathG > path {
+    stroke: #ddd; /* orange ;*/
+    stroke-width: 1.1;
+    fill-rule: evenodd;
+    cursor: pointer;
+}
+.c2iSunburst  .textG > text {
+    font-size: 12px;
+}
+
+.c2iSunburst .pathG .selectedPiece {
+    stroke-width: 3px;
+    stroke: white !important;
+}
+
+.c2iTreemap g .selectedPiece rect {
+    stroke: dimgray;
+    stroke-width: 3px;
+}
+
+.c2iTreemap g .selectedPiece text {
+    font-size: 105% !important
+}
+
+.c2iTreemap .cell > text {
+    font-size: 11px;
+}
+.c2iWordCloud .selectedWordText {
+    fill-opacity: 1 !important;
+    -webkit-transition:all 0.5s;
+    -moz-transition:all 0.5s;
+    -o-transition:all 0.5s;
+    transition:all 0.5s;
+}
+
+.c2iWordCloud .infoHandle{     
+    cursor: pointer;
+}
+
+.c2iWordCloud .c2iOverText{     
+    stroke-dasharray: 5px;
+    stroke-width: 2.5;
+    animation: c2iStrokeAni 10s linear infinite;
+}
+
+@keyframes c2iStrokeAni { 
+    0% { 
+        stroke-dashoffset: 200px;
+    } 
+    100% { 
+        stroke-dashoffset: 0px; 
+    } 
+}

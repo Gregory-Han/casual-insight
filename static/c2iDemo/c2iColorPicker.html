@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>C2i:dumbo-색상 선택기(Color Picker)</title>
+  <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+    <script src="assets/lib/d3.min.js" charset="utf-8"></script>
+    <script src="assets/lib/three.min.js"></script>
+
+    <script src="assets/js/c2i.v2.min.js"></script>
+
+    <script src="assets/i18n/c2i_kr.js"></script>
+    <!-- 다국어 사용시 아래 스크립트 필요합니다. (사용하지 않으면 제거) -->
+    <script src="assets/i18n/c2i_en.js"></script>
+    <script src="assets/i18n/c2i_jp.js"></script>
+    <script src="assets/i18n/c2i_ch.js"></script>
+
+    <!-- 정품 인증번호 발급 및 적용시 아래 스크립트 필요합니다. -->
+    <!--<script src="../assets/c2iLicenseKey.js"></script>-->
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/c2i.v2.min.css">
+    <link rel="stylesheet" href="assets/css/demo.css">
+    <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <style>
+    body {
+      background-color: #484848;
+    }
+    
+    label {
+      color: #919191;
+    }
+    
+    p {
+      color: #c3c3c3;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row" style="margin: 5px 0;">
+      <div class="col-md-1">
+        <a href="index.html#c2iDemo" style="color: white"><div class="btn btn-primary btn-sm btn-group-justified">홈</div></a>
+      </div>
+      <div class="col-md-1">
+        <button id="c2iGuide" class="btn btn-primary btn-sm btn-group-justified">도움말</button>
+      </div>
+      <div class="col-md-2">
+        <div id="create" class="btn btn-success btn-sm btn-group-justified">생성</div>
+      </div>
+      <div class="col-md-2">
+        <div id="clear" class="btn btn-danger btn-sm btn-group-justified">제거</div>
+      </div>
+      <div class="col-md-3">
+        <div id="showHide" class="btn btn-danger btn-sm btn-group-justified">보이기/숨기기</div>
+      </div>
+      <div class="col-md-2">
+        <div id="save" class="btn btn-warning btn-sm btn-group-justified">익스포트</div>
+      </div>
+    </div>
+
+    <div id="c2iGuideInfo" class=" c2iHidden c2iGuideInfo">
+      <div class="container">
+        <button id="c2iGuideClose" class="btn btn-primary btn-sm float my-float">닫기</button>
+        <div class="page-header">
+          <h1 class="text-primary">씨투아이 색상 선택기 컴포넌트</h1>
+          <p>사용자 추가 색상 가능하며, 시스템 제공 31가지 색상 시리즈 제공.</p>
+        </div>
+
+        <!-- 데모 따라하기-->
+        <h3>데모 따라하기</h3>
+        <div class="row">
+          <div class="col-md-3">0.색상 파레트에서 클릭시 색상 반영</div>
+          <div class="col-md-8">예: 단일 색상, 선형(to right, to bottom) 제공.</div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">1.아래 방향에 따라 css3 선형 색상 제공</div>
+          <div class="col-md-8">추후 radial 지원 예정</div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">2.색상 선택기는 드래그 이동 기본 지원</div>
+        </div>
+
+        <!-- 데이터 구조-->
+        <h3>데이터 구조: 문자 배열, 숫자 범위 배열</h3>
+        <div class="row">
+          <div class="col-md-2">0.객체 배열</div>
+          <div class="col-md-9">
+            <pre><code>
+    var data = [{name: 'color3', colors: ['red', 'orange', 'blue']}];
+    c2i.ui.colorPicker('#c2iId', options).data(data)render();
+                    </code></pre>
+          </div>
+        </div>
+
+        <!-- 개발자 코딩 제공 부분 -->
+        <h3>개발자 코딩 제공 부분</h3>
+        <p>홈, 도움말, 생성,제거는 <strong>개발자가 씨투아이 API등을 활용하여 임의로 코딩</strong>하여 제공한 UI 입니다.</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <h3 style="color: #ddd">C2i 색상 적용 지역</h3>
+        <div id="colorRect" width="100%" height="250px">
+          <svg></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- 없으면, 생성시 설정한 ID로 자동 생성 -->
+    <div id="c2iColor01"></div>
+  </div>
+
+  <script>
+    /*
+         대.소문자는 반드시 준수해야 합니다.
+         옵션이 없거나(미정의) '' 이면, 필수요소는 기본값 자동 적용되며 불필요한 옵션은 자동으로 적용되지 않습니다.
+         *** 공통 정보
+             -. width : 넓이
+             -. height: 높이
+             -. lang : 언어 설정(기본값:'kr')
+             -. easing: 애니메이션시 적용될 기본 알고리즘(linear,elastic,exp,bounce..)
+             -. duration: 50~1500 ms(기본값 750)
+
+             -. data : 배열로 다음 형태로 주입합니다.
+                       { name: 'color3', colors: ['red', 'orange', 'blue'] }
+
+             -. type: 'c2i': 씨투아이 제공 색상만(기본),
+                      'mixed': data에 등록한 색상 추가,
+                      'custom': data에 등록한 색상만 사용.
+
+             -. singleColor : true; 클릭시 단일 색상 선택, false; 클릭 행의 모든 색상 선택(기본)
+             -. draggable : 선택창 드래그 이동 가능 여부(기본: false)
+             -. direction : right, bottom, none(기본값) -> right & bottom 은 css3 자원 브라우저만 가능합니다.
+             -. directionHide : direction 숨기기.(하단의 좌우,상하,없음 문자 표시 여부)
+             -. current: undefined, // 현재 색상명.(예: 'color3')
+         */
+    ///////////////////
+    var c2iOption = {
+      width: 170,
+      height: 380, // lang:'en',
+      easing: 'bounce',
+      duration: 750,
+      data: [{
+        name: 'color3',
+        colors: ['red', 'orange', 'blue']
+      }],
+
+      fonts: ['맑은 고딕', '14px', '#ddd'], // 캡션 폰트 & direction 폰트 색상만 적용
+      type: 'mixed', // c2i: 씨투아이 제공 색상만(기본), mixed: data에 등록한 색상 추가, custom: data에 등록한 색상만 사용.
+      singleColor: true, // true: 클릭시 단일 색상 선택, false: 클릭 행의 모든 색상 선택(기본)
+      draggable: true,
+      direction: 'right', // right, bottom, none(기본값) : right & bottom 은 css3 자원 브라우저만 가능합니다.
+      // directionHide: true, // direction 숨기기
+      current: undefined, // 현재 색상명.(예: 'color3')
+      method: {
+        click: getClickInfo,
+        mouseenter: getMouseEnterInfo,
+        mouseleave: getMouseLeaveInfo,
+        mousemove: getMouseMoveInfo
+      },
+      isDev: false
+    };
+
+    ///////////////////
+    function getClickInfo(fromSource, data) {
+      console.log(' click target', data.target);
+      for (var attr in data) {
+        console.log(attr + ' : ' + data[attr]);
+      }
+      d3.select('#colorRect').style('background', data.colors[0]);
+    }
+
+    function getMouseEnterInfo(fromSource, data) {
+      console.log(' getMouseEnterInfo')
+    }
+
+    function getMouseLeaveInfo(fromSource, data) {
+      console.log(' getMouseLeaveInfo')
+    }
+
+    function getMouseMoveInfo(fromSource, data) {
+      console.log(' getMouseMoveInfo');
+      //d3.select('body').style('background', data.colors[0]);
+    }
+    var c2iColorPicker = c2i.ui.colorPicker('#c2iColor01', c2iOption).render();
+  </script>
+  <script>
+    d3.select('#create').on('click', function() {
+      if (c2iColorPicker) {
+        alert('*.기존 것을 삭제 후 작업하세요.');
+        return;
+      }
+      c2iColorPicker = c2i.ui.colorPicker('#c2iColor01', c2iOption).render();
+    });
+
+    d3.select('#clear').on('click', function() {
+      if (c2iColorPicker) {
+        c2iColorPicker.clear();
+        c2iColorPicker = undefined;
+      }
+    });
+
+    d3.select('#showHide').on('click', function() {
+      if (c2iColorPicker)
+        c2iColorPicker.showHide('#색상 호울 한 곳 ID');
+    });
+
+    d3.select('#save').on('click', exportImage);
+
+    function exportImage() {
+      c2i.util.exportImage(['#c2iColor01']);
+    }
+
+    d3.select('#c2iGuide').on('click', c2iGuide);
+    d3.select('#c2iGuideClose').on('click', c2iGuideClose);
+
+    function c2iGuide() {
+      d3.select('#c2iGuideInfo').classed('c2iHidden', !d3.select('#c2iGuideInfo').classed('c2iHidden'));
+    }
+
+    function c2iGuideClose() {
+      d3.select('#c2iGuideInfo').classed('c2iHidden', true);
+    }
+  </script>
+</body>
+
+</html>
